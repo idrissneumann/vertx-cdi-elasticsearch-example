@@ -14,83 +14,83 @@ import com.bblvertx.pojo.vo.UserVO;
 import com.bblvertx.utils.singleton.RouteContext;
 
 /**
- * Implémentation de l'adapter pour les utilisateurs du chat.
+ * Adapter for user.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public class UserIndexationSingleAdapter extends AbstractIndexationAdapter<UserVO> {
-	/**
-	 * Constructeur.
-	 * 
-	 * @param ctx
-	 */
-	public UserIndexationSingleAdapter(RouteContext ctx) {
-		super(ctx);
-		rowMapper = new UserMapper();
-	}
+  /**
+   * Constructor.
+   * 
+   * @param ctx
+   */
+  public UserIndexationSingleAdapter(RouteContext ctx) {
+    super(ctx);
+    rowMapper = new UserMapper();
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getSQLUpdateRsSearch() {
-		try {
-			return ctx.getProp().get(SQL_CONFIG_FILE, UPDATE_RSSEARCH);
-		} catch (IOException e) {
-			throw new TechnicalException(e);
-		}
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getSQLUpdateRsSearch() {
+    try {
+      return ctx.getProp().get(SQL_CONFIG_FILE, UPDATE_RSSEARCH);
+    } catch (IOException e) {
+      throw new TechnicalException(e);
+    }
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getSQLSelectValueObject() {
-		try {
-			return ctx.getProp().get(SQL_CONFIG_FILE, SELECT_SINGLE_USER);
-		} catch (IOException e) {
-			throw new TechnicalException(e);
-		}
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getSQLSelectValueObject() {
+    try {
+      return ctx.getProp().get(SQL_CONFIG_FILE, SELECT_SINGLE_USER);
+    } catch (IOException e) {
+      throw new TechnicalException(e);
+    }
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getIndexName() {
-		return ES_INDEX_USER;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getIndexName() {
+    return ES_INDEX_USER;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getIndexType() {
-		return UserVO.class.getSimpleName();
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getIndexType() {
+    return UserVO.class.getSimpleName();
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Class<?> getValueObjectClass() {
-		return UserVO.class;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Class<?> getValueObjectClass() {
+    return UserVO.class;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getLanguage(UserVO valueObject) {
-		return valueObject.getLng();
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getLanguage(UserVO valueObject) {
+    return valueObject.getLng();
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getId(UserVO valueObject) {
-		return valueObject.getId();
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getId(UserVO valueObject) {
+    return valueObject.getId();
+  }
 }

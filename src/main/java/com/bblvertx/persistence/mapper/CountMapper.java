@@ -8,19 +8,19 @@ import java.sql.SQLException;
 import com.bblvertx.persistence.RowMapper;
 
 /**
- * Mapper le résultat d'une requête COUNT.
+ * COUNT mapper.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public class CountMapper implements RowMapper<Integer> {
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @throws SQLException
-	 */
-	@Override
-	public Integer map(ResultSet rs) throws SQLException {
-		return getIntFromRS(rs, "COUNT");
-	}
+  /**
+   * {@inheritDoc}
+   * 
+   * @throws SQLException
+   */
+  @Override
+  public Integer map(ResultSet rs) throws SQLException {
+    return getIntFromRS(rs, "COUNT");
+  }
 }

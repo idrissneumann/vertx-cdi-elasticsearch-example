@@ -10,31 +10,23 @@ import com.bblvertx.utils.singleton.RouteContext;
 import com.bblvertx.utils.singleton.SeDataSource;
 
 /**
- * Initialisation du contexte de cycle de vie des singletons.
+ * Init of lifecycle beans context.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public class SeBinder extends AbstractBinder {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void configure() {
-		// bind(implémentation du service)
-		// .to(contrat de service)
-		// .in(scope du service)
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void configure() {
+    bind(PropertyReader.class).to(PropertyReader.class).in(Singleton.class);
 
-		// Instanciation du singleton pour le propertyReader.
-		bind(PropertyReader.class).to(PropertyReader.class).in(Singleton.class);
+    bind(SeDataSource.class).to(SeDataSource.class).in(Singleton.class);
 
-		// Instanciation du singleton pour la bdd
-		bind(SeDataSource.class).to(SeDataSource.class).in(Singleton.class);
+    bind(ESClient.class).to(ESClient.class).in(Singleton.class);
 
-		// Instanciation du singleton pour elastic search
-		bind(ESClient.class).to(ESClient.class).in(Singleton.class);
-
-		// Instanciation du context pour les routes
-		bind(RouteContext.class).to(RouteContext.class).in(Singleton.class);
-	}
+    bind(RouteContext.class).to(RouteContext.class).in(Singleton.class);
+  }
 }

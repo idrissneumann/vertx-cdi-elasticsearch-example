@@ -3,7 +3,7 @@ package com.bblvertx.route;
 import static com.bblvertx.SeConstants.MSG_BAD_REQUEST;
 import static com.bblvertx.SeConstants.MSG_BAD_REQUEST_MUST_BE_NUMERIC;
 import static com.bblvertx.utils.CommonUtils.assertParamNotEmpty;
-import static com.bblvertx.utils.CommonUtils.assertParamNotNumeric;
+import static com.bblvertx.utils.CommonUtils.assertParamNumeric;
 import static com.bblvertx.utils.CommonUtils.initSearchResult;
 import static com.bblvertx.utils.JSONUtils.objectTojsonQuietly;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
@@ -57,8 +57,8 @@ public abstract class AbstractSearchSingleFieldRoute extends AbstractSearchIndex
 	 */
 	public String proceed(HttpServerRequest request, HttpServerResponse response, String indexName, String fieldName) {
 		// Contrôles des paramètres
-		Integer startIndex = assertParamNotNumeric(request.getParam("startIndex"), String.format(MSG_BAD_REQUEST_MUST_BE_NUMERIC, "startIndex"));
-		Integer maxResults = assertParamNotNumeric(request.getParam("maxResults"), String.format(MSG_BAD_REQUEST_MUST_BE_NUMERIC, "maxResults"));
+		Integer startIndex = assertParamNumeric(request.getParam("startIndex"), String.format(MSG_BAD_REQUEST_MUST_BE_NUMERIC, "startIndex"));
+		Integer maxResults = assertParamNumeric(request.getParam("maxResults"), String.format(MSG_BAD_REQUEST_MUST_BE_NUMERIC, "maxResults"));
 
 		assertParamNotEmpty(startIndex, String.format(MSG_BAD_REQUEST, "startIndex"));
 		assertParamNotEmpty(maxResults, String.format(MSG_BAD_REQUEST, "maxResults"));

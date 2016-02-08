@@ -8,17 +8,17 @@ import java.sql.SQLException;
 import com.bblvertx.persistence.RowMapper;
 
 /**
- * Mapper pour récupérer l'id profil.
+ * User id mapper.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class IdMapper implements RowMapper<Integer> {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Integer map(ResultSet rs) throws SQLException {
-		return getIntFromRS(rs, "t_profil_id");
-	}
+public class UserIdMapper implements RowMapper<Integer> {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer map(ResultSet rs) throws SQLException {
+    return getIntFromRS(rs, "t_user_id");
+  }
 }

@@ -7,184 +7,173 @@ import java.util.Calendar;
 import java.util.UUID;
 
 /**
- * Utilisateur du chat (correspondant à un profil personnel).
+ * User VO.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public class UserVO implements Serializable {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private String nom;
+  private String name;
 
-	private String prenom;
+  private String firstname;
 
-	private String email;
+  private String email;
 
-	private String id;
+  private String id;
 
-	private String lng;
+  private String lng;
 
-	private Calendar dateConnect;
+  private Calendar dateConnect;
 
-	private Calendar dateUpdate;
+  private Calendar dateUpdate;
 
-	private Integer rsSearch;
+  private Integer rsSearch;
 
-	private Long idPhotoProfil;
+  private String randomId = UUID.randomUUID().toString();
 
-	private String randomId = UUID.randomUUID().toString();
+  /**
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
 
-	/**
-	 * @return the nom
-	 */
-	public String getNom() {
-		return nom;
-	}
+  /**
+   * @param name the name to set
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	/**
-	 * @param nom
-	 *            the nom to set
-	 */
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+  /**
+   * @return the firstname
+   */
+  public String getFirstname() {
+    return firstname;
+  }
 
-	/**
-	 * @return the prenom
-	 */
-	public String getPrenom() {
-		return prenom;
-	}
+  /**
+   * @param firstname the firstname to set
+   */
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
 
-	/**
-	 * @param prenom
-	 *            the prenom to set
-	 */
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+  /**
+   * @return the randomId
+   */
+  public String getRandomId() {
+    return randomId;
+  }
 
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
+  /**
+   * @param randomId the randomId to set
+   */
+  public void setRandomId(String randomId) {
+    this.randomId = randomId;
+  }
 
-	/**
-	 * @param email
-	 *            the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  /**
+   * @return the email
+   */
+  public String getEmail() {
+    return email;
+  }
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
+  /**
+   * @param email the email to set
+   */
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
-	/**
-	 * @return the lng
-	 */
-	public String getLng() {
-		return lng;
-	}
+  /**
+   * @param id the id to set
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-	/**
-	 * @param lng
-	 *            the lng to set
-	 */
-	public void setLng(String lng) {
-		this.lng = lng;
-	}
+  /**
+   * @return the lng
+   */
+  public String getLng() {
+    return lng;
+  }
 
-	/**
-	 * @return the dateConnect
-	 */
-	public Calendar getDateConnect() {
-		return dateConnect;
-	}
+  /**
+   * @param lng the lng to set
+   */
+  public void setLng(String lng) {
+    this.lng = lng;
+  }
 
-	/**
-	 * @param dateConnect
-	 *            the dateConnect to set
-	 */
-	public void setDateConnect(Calendar dateConnect) {
-		this.dateConnect = dateConnect;
-	}
+  /**
+   * @return the dateConnect
+   */
+  public Calendar getDateConnect() {
+    return dateConnect;
+  }
 
-	/**
-	 * @return the dateUpdate
-	 */
-	public Calendar getDateUpdate() {
-		return dateUpdate;
-	}
+  /**
+   * @param dateConnect the dateConnect to set
+   */
+  public void setDateConnect(Calendar dateConnect) {
+    this.dateConnect = dateConnect;
+  }
 
-	/**
-	 * @param dateUpdate
-	 *            the dateUpdate to set
-	 */
-	public void setDateUpdate(Calendar dateUpdate) {
-		this.dateUpdate = dateUpdate;
-	}
+  /**
+   * @return the dateUpdate
+   */
+  public Calendar getDateUpdate() {
+    return dateUpdate;
+  }
 
-	/**
-	 * @return the rsSearch
-	 */
-	public Integer getRsSearch() {
-		return rsSearch;
-	}
+  /**
+   * @param dateUpdate the dateUpdate to set
+   */
+  public void setDateUpdate(Calendar dateUpdate) {
+    this.dateUpdate = dateUpdate;
+  }
 
-	/**
-	 * @param rsSearch
-	 *            the rsSearch to set
-	 */
-	public void setRsSearch(Integer rsSearch) {
-		this.rsSearch = rsSearch;
-	}
+  /**
+   * @return the rsSearch
+   */
+  public Integer getRsSearch() {
+    return rsSearch;
+  }
 
-	/**
-	 * @return the idPhotoProfil
-	 */
-	public Long getIdPhotoProfil() {
-		return idPhotoProfil;
-	}
+  /**
+   * @param rsSearch the rsSearch to set
+   */
+  public void setRsSearch(Integer rsSearch) {
+    this.rsSearch = rsSearch;
+  }
 
-	/**
-	 * @param idPhotoProfil
-	 *            the idPhotoProfil to set
-	 */
-	public void setIdPhotoProfil(Long idPhotoProfil) {
-		this.idPhotoProfil = idPhotoProfil;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		if (isNotEmpty(nom) && isNotEmpty(prenom)) {
-			return String.format("%s %s", prenom, nom);
-		} else if (isNotEmpty(nom)) {
-			return nom;
-		} else if (isNotEmpty(prenom)) {
-			return prenom;
-		} else if (isNotEmpty(email)) {
-			return email;
-		} else {
-			return randomId;
-		}
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    if (isNotEmpty(name) && isNotEmpty(firstname)) {
+      return String.format("%s %s", firstname, name);
+    } else if (isNotEmpty(name)) {
+      return name;
+    } else if (isNotEmpty(firstname)) {
+      return firstname;
+    } else if (isNotEmpty(email)) {
+      return email;
+    } else {
+      return randomId;
+    }
+  }
 }

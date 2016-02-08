@@ -10,29 +10,29 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 
 /**
- * Route pour tester le démarrage du verticle.
+ * Hello route.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public class HelloWorldRoute extends AbstractRoute {
-	/**
-	 * Constructeur.
-	 * 
-	 * @param url
-	 * @param contentType
-	 * @param router
-	 * @param ctx
-	 */
-	public HelloWorldRoute(String url, String contentType, Router router, RouteContext ctx) {
-		super(url, contentType, router, ctx);
-	}
+  /**
+   * Constructor.
+   * 
+   * @param url
+   * @param contentType
+   * @param router
+   * @param ctx
+   */
+  public HelloWorldRoute(String url, String contentType, Router router, RouteContext ctx) {
+    super(url, contentType, router, ctx);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String proceed(HttpServerRequest request, HttpServerResponse response) {
-		return String.format(RESPONSE_HTML_TEMPLATE, "Hello world");
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String proceed(HttpServerRequest request, HttpServerResponse response) {
+    return String.format(RESPONSE_HTML_TEMPLATE, "Hello world");
+  }
 }
