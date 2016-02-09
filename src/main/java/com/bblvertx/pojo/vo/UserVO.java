@@ -23,8 +23,6 @@ public class UserVO implements Serializable {
 
   private String id;
 
-  private String lng;
-
   private Calendar dateConnect;
 
   private Calendar dateUpdate;
@@ -101,20 +99,6 @@ public class UserVO implements Serializable {
    */
   public void setId(String id) {
     this.id = id;
-  }
-
-  /**
-   * @return the lng
-   */
-  public String getLng() {
-    return lng;
-  }
-
-  /**
-   * @param lng the lng to set
-   */
-  public void setLng(String lng) {
-    this.lng = lng;
   }
 
   /**

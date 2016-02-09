@@ -10,7 +10,7 @@ import static com.bblvertx.SeConstants.UPDATE_RSSEARCH;
 import java.io.IOException;
 
 import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.AbstractIndexationDeltaAdapter;
+import com.bblvertx.indexation.adapter.AbstractIndexingDeltaAdapter;
 import com.bblvertx.persistence.mapper.UserIdMapper;
 import com.bblvertx.persistence.mapper.UserMapper;
 import com.bblvertx.pojo.vo.UserVO;
@@ -22,7 +22,7 @@ import com.bblvertx.utils.singleton.RouteContext;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class UserIndexationDeltaAdapter extends AbstractIndexationDeltaAdapter<UserVO> {
+public class UserIndexationDeltaAdapter extends AbstractIndexingDeltaAdapter<UserVO> {
   /**
    * Constructor.
    * 
@@ -104,14 +104,6 @@ public class UserIndexationDeltaAdapter extends AbstractIndexationDeltaAdapter<U
   @Override
   public Class<?> getValueObjectClass() {
     return UserVO.class;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getLanguage(UserVO valueObject) {
-    return valueObject.getLng();
   }
 
   /**

@@ -26,12 +26,12 @@ public class SearchResult<T> implements Serializable {
   private List<? extends T> results;
 
   /**
-   * Default constructor
+   * Default constructor.
    */
   public SearchResult() {}
 
   /**
-   * Default constructor
+   * Constructor.
    * 
    * @param startIndex init startIndex
    * @param maxResults init maxResults
@@ -41,7 +41,7 @@ public class SearchResult<T> implements Serializable {
   }
 
   /**
-   * Default constructor
+   * Constructor
    * 
    * @param startIndex init startIndex
    * @param maxResults init maxResults
@@ -52,7 +52,7 @@ public class SearchResult<T> implements Serializable {
   }
 
   /**
-   * Default constructor
+   * Constructor
    * 
    * @param results init result list
    */

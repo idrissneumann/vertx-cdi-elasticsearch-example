@@ -13,7 +13,7 @@ import com.bblvertx.persistence.RowMapper;
  *            type de l'objet valeur
  *
  */
-public interface IndexationDeltaAdapter<T extends Serializable> extends IndexationAdapter<T> {
+public interface IndexingDeltaAdapter<T extends Serializable> extends IndexingAdapter<T> {
 	/**
 	 * Récupérer la requête SQL de type "select flag".
 	 * 

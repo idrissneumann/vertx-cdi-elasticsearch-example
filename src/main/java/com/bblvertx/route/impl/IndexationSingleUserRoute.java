@@ -2,7 +2,7 @@ package com.bblvertx.route.impl;
 
 import com.bblvertx.indexation.adapter.impl.UserIndexationSingleAdapter;
 import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.route.AbstractIndexationSingleRoute;
+import com.bblvertx.route.AbstractIndexingSingleRoute;
 import com.bblvertx.utils.singleton.RouteContext;
 
 import io.vertx.ext.web.Router;
@@ -13,7 +13,7 @@ import io.vertx.ext.web.Router;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class IndexationSingleUserRoute extends AbstractIndexationSingleRoute<UserVO> {
+public class IndexationSingleUserRoute extends AbstractIndexingSingleRoute<UserVO> {
   /**
    * Constructor.
    * 

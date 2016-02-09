@@ -2,7 +2,7 @@ package com.bblvertx.route.impl;
 
 import com.bblvertx.indexation.adapter.impl.UserIndexationDeltaAdapter;
 import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.route.AbstractIndexationDeltaRoute;
+import com.bblvertx.route.AbstractIndexingDeltaRoute;
 import com.bblvertx.utils.singleton.RouteContext;
 
 import io.vertx.ext.web.Router;
@@ -13,7 +13,7 @@ import io.vertx.ext.web.Router;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class IndexationUserRoute extends AbstractIndexationDeltaRoute<UserVO> {
+public class IndexationUserRoute extends AbstractIndexingDeltaRoute<UserVO> {
   /**
    * Constructor.
    * 

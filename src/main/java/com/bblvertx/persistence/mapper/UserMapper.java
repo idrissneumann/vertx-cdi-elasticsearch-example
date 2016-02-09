@@ -29,7 +29,6 @@ public class UserMapper implements RowMapper<UserVO> {
     rtn.setName(getStringFromRS(rs, "name"));
     rtn.setFirstname(getStringFromRS(rs, "firstname"));
     rtn.setEmail(getStringFromRS(rs, "email"));
-    rtn.setLng(getStringFromRS(rs, "lng"));
     rtn.setRsSearch(getIntFromRS(rs, "rs_search"));
     return rtn;
   }

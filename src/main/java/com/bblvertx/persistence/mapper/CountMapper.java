@@ -16,8 +16,6 @@ import com.bblvertx.persistence.RowMapper;
 public class CountMapper implements RowMapper<Integer> {
   /**
    * {@inheritDoc}
-   * 
-   * @throws SQLException
    */
   @Override
   public Integer map(ResultSet rs) throws SQLException {

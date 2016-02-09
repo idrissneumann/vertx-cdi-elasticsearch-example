@@ -10,6 +10,9 @@ public class FunctionalException extends Exception {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Default constructor.
+   */
   public FunctionalException() {
     super();
   }
