@@ -5,33 +5,32 @@ import java.io.Serializable;
 import com.bblvertx.persistence.RowMapper;
 
 /**
- * Adapter pour les jobs d'indexation en delta.
+ * Indexing delta job adapter.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  * 
- * @param <T>
- *            type de l'objet valeur
+ * @param <T> value object's type.
  *
  */
 public interface IndexingDeltaAdapter<T extends Serializable> extends IndexingAdapter<T> {
-	/**
-	 * Récupérer la requête SQL de type "select flag".
-	 * 
-	 * @return String
-	 */
-	String getSQLSelectFlagIdx();
+  /**
+   * Getting the "select flag" SQL query.
+   * 
+   * @return the query
+   */
+  String getSQLSelectFlagIdx();
 
-	/**
-	 * Récupérer la requête SQL de type "delete rs search".
-	 * 
-	 * @return String
-	 */
-	String getSQLDeleteRsSearch();
+  /**
+   * Getting the "delete rs search" query.
+   * 
+   * @return the query
+   */
+  String getSQLDeleteRsSearch();
 
-	/**
-	 * Mapper pour l'id.
-	 * 
-	 * @return RowMapper<Integer>
-	 */
-	RowMapper<Integer> getIdMapper();
+  /**
+   * Getting a mapper for the id.
+   * 
+   * @return RowMapper<Integer>
+   */
+  RowMapper<Integer> getIdMapper();
 }

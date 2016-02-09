@@ -25,21 +25,22 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 
 /**
- * Implémentation générique d'une indexation en delta.
+ * Generic impl of delta indexing route.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
- * @param <T> type de l'objet valeur
+ * @param <T> value object's type
  */
 public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
     extends AbstractIndexingRoute {
+
   /**
-   * Adapter pour les spécificités de chaque indexation.
+   * Adapter for the specificity of each object which will be indexed.
    */
   protected IndexingDeltaAdapter<T> adapter;
 
   /**
-   * Constructeur.
+   * Constructor.
    * 
    * @param url
    * @param contentType
@@ -52,9 +53,9 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
   }
 
   /**
-   * Purge des anciennes données.
+   * Deleting old data (rs search = -1).
    */
-  private void purgeOldData() {
+  private void deleteOldData() {
     try {
       String sql = adapter.getSQLSelectFlagIdx();
       String sqlDelete = adapter.getSQLDeleteRsSearch();
@@ -62,7 +63,6 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
       Integer numRow = 0;
       List<Integer> lstResults = null;
 
-      // Paramètres
       QueryParam pRsSearch = new QueryParamBuilder() //
           .add("order", 1, Integer.class) //
           .add("value", RS_TO_DELETE, Object.class) //
@@ -90,13 +90,11 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
 
         if (isNotEmpty(lstResults)) {
           for (Integer idElem : lstResults) {
-            for (String lng : CODE_LANGUAGES) {
-              ctx.getEsClient() //
-                  .getClient() //
-                  .prepareDelete(adapter.getIndexName(), adapter.getIndexType(),
-                      String.valueOf(idElem + "_" + lng)) //
-                  .execute().actionGet();
-            }
+            ctx.getEsClient() //
+                .getClient() //
+                .prepareDelete(adapter.getIndexName(), adapter.getIndexType(),
+                    String.valueOf(idElem)) //
+                .execute().actionGet();
 
             idElems.add(String.format(ID_TPL, String.valueOf(idElem)));
           }
@@ -114,9 +112,9 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
   }
 
   /**
-   * Indexation des nouvelles données.
+   * Indexing new data (rs search = 1)
    */
-  private void indexationNewData() {
+  private void indexingNewData() {
     try {
       String sql = adapter.getSQLSelectValueObject();
       String sqlUpdate = adapter.getSQLUpdateRsSearch();
@@ -125,7 +123,6 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
       List<T> lstResults = null;
       RowMapper<T> mapper = adapter.getMapper();
 
-      // Paramètres
       QueryParam pRsSearch = new QueryParamBuilder() //
           .add("order", 1, Integer.class) //
           .add("value", RS_TO_UPDATE, Object.class) //
@@ -187,8 +184,8 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
    */
   @Override
   public void proceedAsync(HttpServerRequest request, HttpServerResponse response) {
-    indexationNewData();
-    purgeOldData();
+    indexingNewData();
+    deleteOldData();
   }
 
   /**

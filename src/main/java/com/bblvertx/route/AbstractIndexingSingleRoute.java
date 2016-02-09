@@ -26,11 +26,11 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 
 /**
- * Classe abstraite pour les indexations en mode Single.
+ * Generic impl of single mode indexing route.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  * 
- * @param <T> type de l'objet valeur
+ * @param <T> value object's type
  *
  */
 public abstract class AbstractIndexingSingleRoute<T extends Serializable>
@@ -41,7 +41,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
   protected IndexingAdapter<T> adapter;
 
   /**
-   * Constructeur.
+   * Constructor.
    * 
    * @param url
    * @param contentType
@@ -61,13 +61,13 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
     String id = request.getParam("id");
     assertParamNotEmpty(id, String.format(MSG_BAD_REQUEST, "id"));
 
-    indexationNewData(id);
+    indexingNewData(id);
   }
 
   /**
-   * Indexation des nouvelles données.
+   * Indexing new data (id = ... and rs search = 1)
    */
-  private void indexationNewData(String id) {
+  private void indexingNewData(String id) {
     try {
       String sql = adapter.getSQLSelectValueObject();
       String sqlUpdate = adapter.getSQLUpdateRsSearch();
@@ -76,7 +76,6 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
       List<T> lstResults = null;
       RowMapper<T> mapper = adapter.getMapper();
 
-      // Paramètres
       QueryParam pId = new QueryParamBuilder() //
           .add("order", 1, Integer.class) //
           .add("value", id, Object.class) //

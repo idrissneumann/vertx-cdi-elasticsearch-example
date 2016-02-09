@@ -15,7 +15,7 @@ public abstract class AbstractIndexingRoute extends AbstractAsyncRoute {
   public final static String ID_TPL = "'%s'";
 
   /**
-   * Constructeur.
+   * Constructor.
    * 
    * @param url
    * @param contentType
