@@ -20,139 +20,137 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Classe utilitaire pour encoder/décoder du JSON.
+ * Utils class for marshall and unmarshall JSON expression.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public class JSONUtils {
-	private static final Logger LOGGER = LogManager.getLogger(JSONUtils.class);
+  private static final Logger LOGGER = LogManager.getLogger(JSONUtils.class);
 
-	/**
-	 * Convertir une Map en JSON.
-	 * 
-	 * @param map
-	 * @return String
-	 */
-	public static String map2jsonQuietly(Map<?, ?> map) {
-		if (!isNotEmpty(map)) {
-			return SeConstants.EMPTY_STRING;
-		}
+  /**
+   * Convert map to json.
+   * 
+   * @param map
+   * @return String
+   */
+  public static String map2jsonQuietly(Map<?, ?> map) {
+    if (!isNotEmpty(map)) {
+      return SeConstants.EMPTY_STRING;
+    }
 
-		String rtn = SeConstants.EMPTY_STRING;
+    String rtn = SeConstants.EMPTY_STRING;
 
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			rtn = mapper.writeValueAsString(map);
-		} catch (JsonGenerationException e) {
-			LOGGER.error("Erreur de parsing", e);
-		} catch (JsonMappingException e) {
-			LOGGER.error("Erreur de parsing", e);
-		} catch (IOException e) {
-			LOGGER.error("Erreur de parsing", e);
-		}
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      rtn = mapper.writeValueAsString(map);
+    } catch (JsonGenerationException e) {
+      LOGGER.error("Erreur de parsing", e);
+    } catch (JsonMappingException e) {
+      LOGGER.error("Erreur de parsing", e);
+    } catch (IOException e) {
+      LOGGER.error("Erreur de parsing", e);
+    }
 
-		return rtn;
-	}
+    return rtn;
+  }
 
-	/**
-	 * Convertir un objet en JSON.
-	 * 
-	 * @param obj
-	 * @param clazz
-	 * @return String
-	 */
-	public static String objectTojsonQuietly(Object obj, Class<?> clazz) {
-		ObjectMapper mapper = new ObjectMapper();
-		String json = null;
-		try {
-			json = mapper.writeValueAsString(clazz.cast(obj));
-		} catch (JsonProcessingException e) {
-			LOGGER.error("Erreur de parsing", e);
-		}
+  /**
+   * Convert object to JSON.
+   * 
+   * @param obj
+   * @param clazz
+   * @return String
+   */
+  public static String objectTojsonQuietly(Object obj, Class<?> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    String json = null;
+    try {
+      json = mapper.writeValueAsString(clazz.cast(obj));
+    } catch (JsonProcessingException e) {
+      LOGGER.error("Erreur de parsing", e);
+    }
 
-		return json;
-	}
+    return json;
+  }
 
-	/**
-	 * Convertir une Liste en JSON.
-	 * 
-	 * @param list
-	 * @return String
-	 */
-	public static String list2jsonQuietly(List<? extends List<String>> list) {
-		if (!isNotEmpty(list)) {
-			return SeConstants.EMPTY_JSON;
-		}
+  /**
+   * Convert List to JSON.
+   * 
+   * @param list
+   * @return String
+   */
+  public static String list2jsonQuietly(List<? extends List<String>> list) {
+    if (!isNotEmpty(list)) {
+      return SeConstants.EMPTY_JSON;
+    }
 
-		String rtn = SeConstants.EMPTY_JSON;
+    String rtn = SeConstants.EMPTY_JSON;
 
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			rtn = mapper.writeValueAsString(list);
-		} catch (JsonGenerationException e) {
-			LOGGER.error("Erreur de parsing", e);
-		} catch (JsonMappingException e) {
-			LOGGER.error("Erreur de parsing", e);
-		} catch (IOException e) {
-			LOGGER.error("Erreur de parsing", e);
-		}
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      rtn = mapper.writeValueAsString(list);
+    } catch (JsonGenerationException e) {
+      LOGGER.error("Erreur de parsing", e);
+    } catch (JsonMappingException e) {
+      LOGGER.error("Erreur de parsing", e);
+    } catch (IOException e) {
+      LOGGER.error("Erreur de parsing", e);
+    }
 
-		return rtn;
-	}
+    return rtn;
+  }
 
-	/**
-	 * Transformer une liste en JSON
-	 * 
-	 * @param list
-	 * @return String
-	 */
-	public static String genericList2jsonQuietly(List<?> list) {
-		if (!isNotEmpty(list)) {
-			return SeConstants.EMPTY_JSON;
-		}
+  /**
+   * Convert generic list to JSON.
+   * 
+   * @param list
+   * @return String
+   */
+  public static String genericList2jsonQuietly(List<?> list) {
+    if (!isNotEmpty(list)) {
+      return SeConstants.EMPTY_JSON;
+    }
 
-		String rtn = SeConstants.EMPTY_JSON;
+    String rtn = SeConstants.EMPTY_JSON;
 
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			rtn = mapper.writeValueAsString(list);
-		} catch (JsonGenerationException e) {
-			LOGGER.error("Erreur de parsing", e);
-		} catch (JsonMappingException e) {
-			LOGGER.error("Erreur de parsing", e);
-		} catch (IOException e) {
-			LOGGER.error("Erreur de parsing", e);
-		}
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      rtn = mapper.writeValueAsString(list);
+    } catch (JsonGenerationException e) {
+      LOGGER.error("Erreur de parsing", e);
+    } catch (JsonMappingException e) {
+      LOGGER.error("Erreur de parsing", e);
+    } catch (IOException e) {
+      LOGGER.error("Erreur de parsing", e);
+    }
 
-		return rtn;
-	}
+    return rtn;
+  }
 
-	/**
-	 * Convertir une chaîne Json en map.
-	 * 
-	 * @param json
-	 * @return
-	 */
-	public static Map<String, String> json2mapQuietly(String json) {
-		Map<String, String> rtn = null;
+  /**
+   * Convert String JSON in a map.
+   * 
+   * @param json
+   * @return the map
+   */
+  public static Map<String, String> json2mapQuietly(String json) {
+    Map<String, String> rtn = null;
 
-		if (isNotEmpty(json)) {
-			try {
-				ObjectMapper mapper = new ObjectMapper();
-				rtn = mapper.readValue(json, new TypeReference<HashMap<String, String>>() {
-				});
-			} catch (Exception e) {
-				LOGGER.error("Erreur de parsing", e);
-			}
-		}
+    if (isNotEmpty(json)) {
+      try {
+        ObjectMapper mapper = new ObjectMapper();
+        rtn = mapper.readValue(json, new TypeReference<HashMap<String, String>>() {});
+      } catch (Exception e) {
+        LOGGER.error("Erreur de parsing", e);
+      }
+    }
 
-		return rtn;
-	}
+    return rtn;
+  }
 
-	/**
-	 * Classe statique
-	 */
-	private JSONUtils() {
-	}
+  /**
+   * Utils class => private constructor.
+   */
+  private JSONUtils() {}
 }

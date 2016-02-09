@@ -17,41 +17,41 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
 /**
- * Singleton pour le client elastic search.
+ * Elastic Search client singleton.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 @Singleton
 public class ESClient {
-	@Inject
-	private PropertyReader prop;
+  @Inject
+  private PropertyReader prop;
 
-	private static final String CLUSTER_NAME = "cluster.name";
+  private static final String CLUSTER_NAME = "cluster.name";
 
-	private TransportClient client;
+  private TransportClient client;
 
-	/**
-	 * Intialisation du singleton.
-	 * 
-	 * @throws IOException
-	 */
-	@PostConstruct
-	public void init() throws IOException {
-		String host = prop.get(APP_CONFIG_FILE, ES_KEY_HOST);
-		Integer port = prop.getInt(APP_CONFIG_FILE, ES_KEY_PORT);
-		String cluster = prop.get(APP_CONFIG_FILE, ES_KEY_CLUSTER);
+  /**
+   * Init of singleton.
+   * 
+   * @throws IOException
+   */
+  @PostConstruct
+  public void init() throws IOException {
+    String host = prop.get(APP_CONFIG_FILE, ES_KEY_HOST);
+    Integer port = prop.getInt(APP_CONFIG_FILE, ES_KEY_PORT);
+    String cluster = prop.get(APP_CONFIG_FILE, ES_KEY_CLUSTER);
 
-		Settings settings = ImmutableSettings.settingsBuilder().put(CLUSTER_NAME, cluster).build();
+    Settings settings = ImmutableSettings.settingsBuilder().put(CLUSTER_NAME, cluster).build();
 
-		client = new TransportClient(settings);
-		client.addTransportAddress(new InetSocketTransportAddress(host, port));
-	}
+    client = new TransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(host, port));
+  }
 
-	/**
-	 * @return the client
-	 */
-	public TransportClient getClient() {
-		return client;
-	}
+  /**
+   * @return the client
+   */
+  public TransportClient getClient() {
+    return client;
+  }
 }
