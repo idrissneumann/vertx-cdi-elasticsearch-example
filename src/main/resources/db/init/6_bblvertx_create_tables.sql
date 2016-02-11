@@ -2,9 +2,10 @@ CREATE TABLE T_USER (
 	id SERIAL,
 	name VARCHAR(254), 
 	firstname VARCHAR(254), 
-	email VARCHAR(254),
+	email VARCHAR(254) UNIQUE,
+	skill VARCHAR(254),
 	date_connect DATE, 
-	date_update DATE, 
+	date_update DATE,
 	PRIMARY KEY (id)
 );
 
@@ -46,7 +47,7 @@ CREATE OR REPLACE FUNCTION update_user_idx () RETURNS TRIGGER AS '
         ELSE
             INSERT INTO T_USER_IDX (T_USER_ID, RS_SEARCH, DATE_UPDATE) VALUES (NEW.ID, 1, now());
         END IF; 
-        RETURN OLD; 
+        RETURN NEW; 
     END;
 ' LANGUAGE plpgsql;
 
