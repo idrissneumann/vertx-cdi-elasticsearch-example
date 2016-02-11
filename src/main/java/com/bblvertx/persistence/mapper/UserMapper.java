@@ -4,11 +4,11 @@ import static com.bblvertx.utils.singleton.SeDataSource.getDateFromRS;
 import static com.bblvertx.utils.singleton.SeDataSource.getIntFromRS;
 import static com.bblvertx.utils.singleton.SeDataSource.getStringFromRS;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.bblvertx.persistence.RowMapper;
 import com.bblvertx.pojo.vo.UserVO;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Row mapper for chat users.
@@ -29,6 +29,7 @@ public class UserMapper implements RowMapper<UserVO> {
     rtn.setName(getStringFromRS(rs, "name"));
     rtn.setFirstname(getStringFromRS(rs, "firstname"));
     rtn.setEmail(getStringFromRS(rs, "email"));
+    rtn.setSkill(getStringFromRS(rs, "skill"));
     rtn.setRsSearch(getIntFromRS(rs, "rs_search"));
     return rtn;
   }

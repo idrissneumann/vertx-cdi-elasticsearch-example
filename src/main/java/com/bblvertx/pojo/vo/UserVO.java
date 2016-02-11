@@ -23,6 +23,8 @@ public class UserVO implements Serializable {
 
   private String id;
 
+  private String skill;
+
   private Calendar dateConnect;
 
   private Calendar dateUpdate;
@@ -141,6 +143,20 @@ public class UserVO implements Serializable {
    */
   public void setRsSearch(Integer rsSearch) {
     this.rsSearch = rsSearch;
+  }
+
+  /**
+   * @return the skill
+   */
+  public String getSkill() {
+    return skill;
+  }
+
+  /**
+   * @param skill the skill to set
+   */
+  public void setSkill(String skill) {
+    this.skill = skill;
   }
 
   /**
