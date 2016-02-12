@@ -6,7 +6,7 @@
 		</Console>
 	</Appenders>
 	<Loggers>
-		<Logger name="tn.prodit.network" level="debug" />
+		<Logger name="com.bblvertx" level="debug" />
 		<Root level="warn">
 			<AppenderRef ref="Console" />
 		</Root>
