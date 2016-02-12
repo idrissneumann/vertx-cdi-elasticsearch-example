@@ -4,8 +4,7 @@ CREATE TABLE T_USER (
 	firstname VARCHAR(254), 
 	email VARCHAR(254) UNIQUE,
 	skill VARCHAR(254),
-	date_connect DATE, 
-	date_update DATE,
+	date_connect DATE,
 	PRIMARY KEY (id)
 );
 
