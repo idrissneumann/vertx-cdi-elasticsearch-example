@@ -10,8 +10,8 @@ import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.bblvertx.pojo.SearchResult;
+import com.bblvertx.utils.singleton.RouteContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,8 +19,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 
-import com.bblvertx.pojo.SearchResult;
-import com.bblvertx.utils.singleton.RouteContext;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
@@ -43,7 +43,9 @@ public abstract class AbstractSearchSingleFieldRoute extends AbstractSearchIndex
    * @param router
    * @param ctx
    */
-  public AbstractSearchSingleFieldRoute(String url, String contentType, Router router,
+  public AbstractSearchSingleFieldRoute(String url,
+      String contentType,
+      Router router,
       RouteContext ctx) {
     super(url, contentType, router, ctx);
   }
@@ -59,7 +61,8 @@ public abstract class AbstractSearchSingleFieldRoute extends AbstractSearchIndex
    */
   public String proceed(HttpServerRequest request, HttpServerResponse response, String indexName,
       String fieldName) {
-    // Contrôles des paramètres
+
+    // Checking parameters
     Integer startIndex = assertParamNumeric(request.getParam("startIndex"),
         String.format(MSG_BAD_REQUEST_MUST_BE_NUMERIC, "startIndex"));
     Integer maxResults = assertParamNumeric(request.getParam("maxResults"),
@@ -68,7 +71,7 @@ public abstract class AbstractSearchSingleFieldRoute extends AbstractSearchIndex
     assertParamNotEmpty(startIndex, String.format(MSG_BAD_REQUEST, "startIndex"));
     assertParamNotEmpty(maxResults, String.format(MSG_BAD_REQUEST, "maxResults"));
 
-    List<String> searchCriteres = request.params().getAll("searchCriteres");
+    List<String> searchCriteres = request.params().getAll("term");
 
     BoolQueryBuilder qb = boolQuery();
     qb.minimumNumberShouldMatch(1);

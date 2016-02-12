@@ -16,17 +16,6 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.search.SearchHit;
-
 import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.pojo.SearchResult;
 import com.bblvertx.pojo.vo.UserVO;
@@ -34,6 +23,17 @@ import com.bblvertx.route.AbstractSearchIndexRoute;
 import com.bblvertx.utils.singleton.RouteContext;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
@@ -74,7 +74,7 @@ public class SearchUserRoute extends AbstractSearchIndexRoute {
     assertParamNotEmpty(startIndex, String.format(MSG_BAD_REQUEST, "startIndex"));
     assertParamNotEmpty(maxResults, String.format(MSG_BAD_REQUEST, "maxResults"));
 
-    List<String> searchCriteres = request.params().getAll("searchCriteres");
+    List<String> searchCriteres = request.params().getAll("term");
     String nom = request.getParam("name");
     String prenom = request.getParam("firstname");
     String email = request.getParam("email");
