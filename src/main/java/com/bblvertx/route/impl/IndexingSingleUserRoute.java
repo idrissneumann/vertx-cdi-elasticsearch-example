@@ -13,7 +13,7 @@ import io.vertx.ext.web.Router;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class IndexationSingleUserRoute extends AbstractIndexingSingleRoute<UserVO> {
+public class IndexingSingleUserRoute extends AbstractIndexingSingleRoute<UserVO> {
   /**
    * Constructor.
    * 
@@ -22,7 +22,7 @@ public class IndexationSingleUserRoute extends AbstractIndexingSingleRoute<UserV
    * @param router
    * @param ctx
    */
-  public IndexationSingleUserRoute(String url, String contentType, Router router,
+  public IndexingSingleUserRoute(String url, String contentType, Router router,
       RouteContext ctx) {
     super(url, contentType, router, ctx);
     this.adapter = new UserIndexationSingleAdapter(ctx);

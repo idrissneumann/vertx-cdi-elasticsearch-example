@@ -34,7 +34,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.bblvertx.persistence.QueryParam;
 import com.bblvertx.persistence.mapper.UserMapper;
 import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.route.impl.IndexationUserRoute;
+import com.bblvertx.route.impl.IndexingUserRoute;
 import com.bblvertx.tests.AbstractTest;
 import com.bblvertx.utils.singleton.ESClient;
 import com.bblvertx.utils.singleton.PropertyReader;
@@ -49,7 +49,7 @@ import com.bblvertx.utils.singleton.SeDataSource;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class IndexationUserRouteTest extends AbstractTest {
-	private IndexationUserRoute route;
+	private IndexingUserRoute route;
 
 	@Mock
 	private Route routeMock;
@@ -120,7 +120,7 @@ public class IndexationUserRouteTest extends AbstractTest {
 			failWithException(e);
 		}
 
-		route = new IndexationUserRoute("/route", "/text/html", router, ctx);
+		route = new IndexingUserRoute("/route", "/text/html", router, ctx);
 	}
 
 	/**

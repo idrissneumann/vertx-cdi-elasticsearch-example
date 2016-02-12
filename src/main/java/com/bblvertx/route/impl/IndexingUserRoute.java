@@ -13,7 +13,7 @@ import io.vertx.ext.web.Router;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class IndexationUserRoute extends AbstractIndexingDeltaRoute<UserVO> {
+public class IndexingUserRoute extends AbstractIndexingDeltaRoute<UserVO> {
   /**
    * Constructor.
    * 
@@ -22,7 +22,7 @@ public class IndexationUserRoute extends AbstractIndexingDeltaRoute<UserVO> {
    * @param router
    * @param ctx
    */
-  public IndexationUserRoute(String url, String contentType, Router router, RouteContext ctx) {
+  public IndexingUserRoute(String url, String contentType, Router router, RouteContext ctx) {
     super(url, contentType, router, ctx);
     this.adapter = new UserIndexationDeltaAdapter(ctx);
   }
