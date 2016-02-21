@@ -9,10 +9,6 @@ import static com.bblvertx.utils.CommonUtils.assertParamNotEmpty;
 import static com.bblvertx.utils.JSONUtils.objectTojsonQuietly;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.StringJoiner;
-
 import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.indexation.adapter.IndexingAdapter;
 import com.bblvertx.persistence.QueryParam;
@@ -20,6 +16,12 @@ import com.bblvertx.persistence.QueryParamBuilder;
 import com.bblvertx.persistence.RowMapper;
 import com.bblvertx.utils.JSONUtils;
 import com.bblvertx.utils.singleton.RouteContext;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.StringJoiner;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
@@ -48,7 +50,9 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
    * @param router
    * @param ctx
    */
-  public AbstractIndexingSingleRoute(String url, String contentType, Router router,
+  public AbstractIndexingSingleRoute(String url,
+      String contentType,
+      Router router,
       RouteContext ctx) {
     super(url, contentType, router, ctx);
   }
@@ -58,7 +62,10 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
    */
   @Override
   public void proceedAsync(HttpServerRequest request, HttpServerResponse response) {
-    String id = request.getParam("id");
+    String strId = request.getParam("id");
+    assertParamNotEmpty(strId, String.format(MSG_BAD_REQUEST, "id"));
+
+    Integer id = (StringUtils.isNumeric(strId)) ? Integer.valueOf(strId) : null;
     assertParamNotEmpty(id, String.format(MSG_BAD_REQUEST, "id"));
 
     indexingNewData(id);
@@ -67,7 +74,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
   /**
    * Indexing new data (id = ... and rs search = 1)
    */
-  private void indexingNewData(String id) {
+  private void indexingNewData(Integer id) {
     try {
       String sql = adapter.getSQLSelectValueObject();
       String sqlUpdate = adapter.getSQLUpdateRsSearch();
@@ -79,7 +86,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
       QueryParam pId = new QueryParamBuilder() //
           .add("order", 1, Integer.class) //
           .add("value", id, Object.class) //
-          .add("clazz", String.class, Class.class) //
+          .add("clazz", Integer.class, Class.class) //
           .getParam();
 
       QueryParam pRsSearch = new QueryParamBuilder() //
