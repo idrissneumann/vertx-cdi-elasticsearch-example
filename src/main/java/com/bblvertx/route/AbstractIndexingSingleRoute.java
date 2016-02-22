@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
@@ -64,17 +65,13 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
   public void proceedAsync(HttpServerRequest request, HttpServerResponse response) {
     String strId = request.getParam("id");
     assertParamNotEmpty(strId, String.format(MSG_BAD_REQUEST, "id"));
-
-    Integer id = (StringUtils.isNumeric(strId)) ? Integer.valueOf(strId) : null;
-    assertParamNotEmpty(id, String.format(MSG_BAD_REQUEST, "id"));
-
-    indexingNewData(id);
+    indexingNewData(strId);
   }
 
   /**
    * Indexing new data (id = ... and rs search = 1)
    */
-  private void indexingNewData(Integer id) {
+  private void indexingNewData(String id) {
     try {
       String sql = adapter.getDbSelectValueObject();
       String sqlUpdate = adapter.getDbUpdateRsSearch();
@@ -83,11 +80,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
       List<T> lstResults = null;
       RowMapper<T> mapper = adapter.getMapper();
 
-      QueryParam pId = new QueryParamBuilder() //
-          .add("order", 1, Integer.class) //
-          .add("value", id, Object.class) //
-          .add("clazz", Integer.class, Class.class) //
-          .getParam();
+      QueryParam pId = generateQueryParamWithId(id);
 
       QueryParam pRsSearch = new QueryParamBuilder() //
           .add("order", 2, Integer.class) //
@@ -142,6 +135,36 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
       }
     } catch (Exception e) {
       throw new TechnicalException(e);
+    }
+  }
+
+  /**
+   * Transform the id in a query param.
+   * 
+   * @param id
+   * @return QueryParam
+   */
+  private QueryParam generateQueryParamWithId(String id) {
+    if (StringUtils.isNumeric(id)) {
+      return new QueryParamBuilder() //
+          .add("order", 1, Integer.class) //
+          .add("value", Integer.valueOf(id), Object.class) //
+          .add("clazz", Object.class, Class.class) //
+          .getParam();
+    }
+
+    try {
+      return new QueryParamBuilder() //
+          .add("order", 1, Integer.class) //
+          .add("value", UUID.fromString(id), Object.class) //
+          .add("clazz", UUID.class, Class.class) //
+          .getParam();
+    } catch (IllegalArgumentException e) {
+      return new QueryParamBuilder() //
+          .add("order", 1, Integer.class) //
+          .add("value", id, Object.class) //
+          .add("clazz", String.class, Class.class) //
+          .getParam();
     }
   }
 

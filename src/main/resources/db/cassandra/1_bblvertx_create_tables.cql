@@ -1,6 +1,6 @@
 create table t_user (
 	uid uuid,
-	id int,
+	rowid int,
 	data text,
 	rs_search int,
 	PRIMARY KEY (uid)
