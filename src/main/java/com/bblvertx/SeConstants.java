@@ -34,7 +34,7 @@ public interface SeConstants {
   String UPDATE_RSSEARCH = "sql.update.rssearch";
 
   /**
-   * Database
+   * JDBC database
    */
   String DB_KEY_DRIVER = "db.driver";
   String DB_KEY_URL = "db.url";
@@ -45,6 +45,18 @@ public interface SeConstants {
   String DB_KEY_MAX_POOL_SIZE = "db.min_pool_size";
   String DB_KEY_MAX_STATEMENTS = "db.max_statements";
   String DB_KEY_PAGINATION = "db.pagination";
+
+  /**
+   * Cassandra database
+   */
+  String CASS_HOST = "cassandra.host";
+  String CASS_PORT = "cassandra.port";
+  String CASS_USERNAME = "cassandra.username";
+  String CASS_PASSWD = "cassandra.password";
+  String CASS_KEYSPACE = "cassandra.keyspace";
+  String CASS_BASE_DELAY_MS = "cassandra.base.delay.ms";
+  String CASS_MAX_DELAY_MS = "cassandra.max.delay.ms";
+  String CASS_FETCH_SIZE = "cassandra.fetch.size";
 
   /**
    * Elastic Search

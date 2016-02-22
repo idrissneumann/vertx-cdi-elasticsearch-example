@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Datasource interface.
  * 
- * @author ineumann
+ * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
 public interface SeDataSource {
