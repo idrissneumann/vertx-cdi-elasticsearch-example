@@ -8,7 +8,7 @@ import com.bblvertx.utils.singleton.impl.RouteContext;
 import io.vertx.ext.web.Router;
 
 /**
- * Route to index all of chat user.
+ * Route to index all users of jdbc connection.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *

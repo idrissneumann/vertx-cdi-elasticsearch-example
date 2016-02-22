@@ -107,6 +107,7 @@ public class CassandraDataSource implements SeDataSource {
   public <T extends Serializable> List<T> execute(String query, RowMapper<T> rowMapper) {
     usingKeySpace(KEYSPACE);
     ResultSet rs = execute(query);
+    LOGGER.info("Launching " + query);
 
     List<T> rtn = new ArrayList<T>();
     for (Row row : rs) {
@@ -124,6 +125,7 @@ public class CassandraDataSource implements SeDataSource {
   public <T extends Serializable> List<T> execute(String query, List<QueryParam> params,
       RowMapper<T> rowMapper) {
     usingKeySpace(KEYSPACE);
+    LOGGER.info("Launching " + query);
 
     Object[] arrayParams = null;
     if (isNotEmpty(params)) {
@@ -154,6 +156,7 @@ public class CassandraDataSource implements SeDataSource {
   @Override
   public Integer executeUpdate(String query) {
     usingKeySpace(KEYSPACE);
+    LOGGER.info("Launching " + query);
     return execute(query).getAvailableWithoutFetching();
   }
 
@@ -163,6 +166,7 @@ public class CassandraDataSource implements SeDataSource {
   @Override
   public Integer executeUpdate(String query, List<QueryParam> params) {
     usingKeySpace(KEYSPACE);
+    LOGGER.info("Launching " + query);
 
     Object[] arrayParams = null;
     if (isNotEmpty(params)) {
@@ -289,7 +293,7 @@ public class CassandraDataSource implements SeDataSource {
    */
   public static Calendar getDateFromRS(Row rs, String name) {
     Calendar cal = (Calendar) Calendar.getInstance().clone();
-    cal.setTime(rs.getDate(name));
+    cal.setTimeInMillis(rs.getDate(name).getMillisSinceEpoch());
     return cal;
   }
 }
