@@ -8,7 +8,6 @@ package com.bblvertx;
  */
 public interface SeConstants {
   String KEY_PORT = "se.port";
-  String KEY_NB_ROUTES = "se.routes.nb";
   String CLASS_ROUTE_PATTERN = "com.bblvertx.route.impl.%s";
   String PREFIX_URL = "/bblvertx/api%s";
 
