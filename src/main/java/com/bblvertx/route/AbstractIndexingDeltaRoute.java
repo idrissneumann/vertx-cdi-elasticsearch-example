@@ -9,16 +9,16 @@ import static com.bblvertx.SeConstants.RS_TO_UPDATE;
 import static com.bblvertx.utils.JSONUtils.objectTojsonQuietly;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.StringJoiner;
-
 import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.jdbc.IndexingDeltaAdapter;
+import com.bblvertx.indexation.adapter.IndexingDeltaAdapter;
 import com.bblvertx.persistence.QueryParam;
 import com.bblvertx.persistence.QueryParamBuilder;
 import com.bblvertx.persistence.RowMapper;
 import com.bblvertx.utils.singleton.impl.RouteContext;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.StringJoiner;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
@@ -31,8 +31,8 @@ import io.vertx.ext.web.Router;
  *
  * @param <T> value object's type
  */
-public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
-    extends AbstractJdbcIndexingRoute {
+public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
+    extends AbstractIndexingRoute {
 
   /**
    * Adapter for the specificity of each object which will be indexed.
@@ -47,7 +47,9 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
    * @param router
    * @param ctx
    */
-  public AbstractJdbcIndexingDeltaRoute(String url, String contentType, Router router,
+  public AbstractIndexingDeltaRoute(String url,
+      String contentType,
+      Router router,
       RouteContext ctx) {
     super(url, contentType, router, ctx);
   }
@@ -57,8 +59,8 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
    */
   private void deleteOldData() {
     try {
-      String sql = adapter.getSQLSelectFlagIdx();
-      String sqlDelete = adapter.getSQLDeleteRsSearch();
+      String sql = adapter.getDbSelectFlagIdx();
+      String sqlDelete = adapter.getDbDeleteRsSearch();
       Integer limit = Integer.valueOf(ctx.getProp().get(APP_CONFIG_FILE, DB_KEY_PAGINATION));
       Integer numRow = 0;
       List<Integer> lstResults = null;
@@ -85,7 +87,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        lstResults = ctx.getJdbcDataSource().execute(sql,
+        lstResults = adapter.getDataSource().execute(sql,
             pRsSearch.asList(pLimit.asList(pOffset.asList())), adapter.getIdMapper());
 
         if (isNotEmpty(lstResults)) {
@@ -104,7 +106,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
       } while (isNotEmpty(lstResults));
 
       if (idElems.length() > 0) {
-        ctx.getJdbcDataSource().executeUpdate(String.format(sqlDelete, idElems.toString()));
+        adapter.getDataSource().executeUpdate(String.format(sqlDelete, idElems.toString()));
       }
     } catch (Exception e) {
       throw new TechnicalException(e);
@@ -116,8 +118,8 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
    */
   private void indexingNewData() {
     try {
-      String sql = adapter.getSQLSelectValueObject();
-      String sqlUpdate = adapter.getSQLUpdateRsSearch();
+      String sql = adapter.getDbSelectValueObject();
+      String sqlUpdate = adapter.getDbUpdateRsSearch();
       Integer limit = Integer.valueOf(ctx.getProp().get(APP_CONFIG_FILE, DB_KEY_PAGINATION));
       Integer numRow = 0;
       List<T> lstResults = null;
@@ -145,7 +147,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        lstResults = ctx.getJdbcDataSource().execute(sql,
+        lstResults = adapter.getDataSource().execute(sql,
             pRsSearch.asList(pLimit.asList(pOffset.asList())), mapper);
 
         if (isNotEmpty(lstResults)) {
@@ -171,7 +173,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        ctx.getJdbcDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
+        adapter.getDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
             pRsSearch2.asList());
       }
     } catch (Exception e) {

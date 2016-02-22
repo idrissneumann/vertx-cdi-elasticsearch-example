@@ -30,8 +30,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.net.InetSocketAddress;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -239,5 +241,55 @@ public class CassandraDataSource implements SeDataSource {
     session.close();
     cluster.close();
     LOGGER.info("disconnected");
+  }
+
+  /**
+   * Getting a rs value as int.
+   * 
+   * @param rs
+   * @param name
+   * @return Integer
+   * @throws SQLException
+   */
+  public static Integer getIntFromRS(Row rs, String name) {
+    return rs.getInt(name);
+  }
+
+  /**
+   * Getting a rs value as long.
+   * 
+   * @param rs
+   * @param name
+   * @return Integer
+   * @throws SQLException
+   */
+  public static Long getLongFromRS(Row rs, String name) {
+    return rs.getLong(name);
+  }
+
+  /**
+   * Getting a rs value as string.
+   * 
+   * @param rs
+   * @param name
+   * @return String
+   * @throws SQLException
+   */
+  public static String getStringFromRS(Row rs, String name) {
+    return rs.getString(name);
+  }
+
+  /**
+   * Getting a rs value as calendar.
+   * 
+   * @param rs
+   * @param name
+   * @return Calendar
+   * @throws SQLException
+   */
+  public static Calendar getDateFromRS(Row rs, String name) {
+    Calendar cal = (Calendar) Calendar.getInstance().clone();
+    cal.setTime(rs.getDate(name));
+    return cal;
   }
 }

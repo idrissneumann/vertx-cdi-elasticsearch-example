@@ -1,8 +1,8 @@
 package com.bblvertx.route.impl;
 
-import com.bblvertx.indexation.adapter.impl.UserIndexationSingleAdapter;
+import com.bblvertx.indexation.adapter.impl.JdbcUserIndexationSingleAdapter;
 import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.route.AbstractJdbcIndexingSingleRoute;
+import com.bblvertx.route.AbstractIndexingSingleRoute;
 import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import io.vertx.ext.web.Router;
@@ -13,7 +13,7 @@ import io.vertx.ext.web.Router;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class JdbcIndexingSingleUserRoute extends AbstractJdbcIndexingSingleRoute<UserVO> {
+public class JdbcIndexingSingleUserRoute extends AbstractIndexingSingleRoute<UserVO> {
   /**
    * Constructor.
    * 
@@ -25,6 +25,6 @@ public class JdbcIndexingSingleUserRoute extends AbstractJdbcIndexingSingleRoute
   public JdbcIndexingSingleUserRoute(String url, String contentType, Router router,
       RouteContext ctx) {
     super(url, contentType, router, ctx);
-    this.adapter = new UserIndexationSingleAdapter(ctx);
+    this.adapter = new JdbcUserIndexationSingleAdapter(ctx);
   }
 }

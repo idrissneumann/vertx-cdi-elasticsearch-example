@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 @Singleton
 public class RouteContext {
   @Inject
-  private JdbcDataSource dataJdbcSource;
+  private JdbcDataSource jdbcDataSource;
 
   @Inject
   private CassandraDataSource cassandraDataSource;
@@ -27,14 +27,14 @@ public class RouteContext {
    * @return the dataSource
    */
   public JdbcDataSource getJdbcDataSource() {
-    return dataJdbcSource;
+    return jdbcDataSource;
   }
 
   /**
    * @param dataSource the dataSource to set
    */
   public void setJdbcDataSource(JdbcDataSource dataSource) {
-    this.dataJdbcSource = dataSource;
+    this.jdbcDataSource = dataSource;
   }
 
   /**
@@ -63,5 +63,19 @@ public class RouteContext {
    */
   public void setEsClient(ESClient esClient) {
     this.esClient = esClient;
+  }
+
+  /**
+   * @return the cassandraDataSource
+   */
+  public CassandraDataSource getCassandraDataSource() {
+    return cassandraDataSource;
+  }
+
+  /**
+   * @param cassandraDataSource the cassandraDataSource to set
+   */
+  public void setCassandraDataSource(CassandraDataSource cassandraDataSource) {
+    this.cassandraDataSource = cassandraDataSource;
   }
 }

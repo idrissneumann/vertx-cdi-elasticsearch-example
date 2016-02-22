@@ -22,16 +22,17 @@ public interface SeConstants {
   String APP_CONFIG_FILE = "application.properties";
   String ROUTE_CONFIG_FILE = "routes.properties";
   String SQL_CONFIG_FILE = "sqlqueries.properties";
+  String CQL_CONFIG_FILE = "cqlqueries.properties";
 
   /**
    * SQL queries.
    */
-  String SELECT_CHECK = "sql.check.connection";
-  String SELECT_USER = "sql.user.rssearch";
-  String SELECT_SINGLE_USER = "sql.user.single";
-  String SELECT_USER_FLAG = "sql.user.flagidx";
-  String DELETE_RSSEARCH = "sql.delete.rssearch";
-  String UPDATE_RSSEARCH = "sql.update.rssearch";
+  String SELECT_CHECK = "db.check.connection";
+  String SELECT_USER = "db.user.rssearch";
+  String SELECT_SINGLE_USER = "db.user.single";
+  String SELECT_USER_FLAG = "db.user.flagidx";
+  String DELETE_RSSEARCH = "db.delete.rssearch";
+  String UPDATE_RSSEARCH = "db.update.rssearch";
 
   /**
    * JDBC database

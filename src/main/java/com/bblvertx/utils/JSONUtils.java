@@ -4,20 +4,20 @@ import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.collections.MapUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.bblvertx.SeConstants;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Utils class for marshall and unmarshall JSON expression.
@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 public class JSONUtils {
+  public static final String ERROR_PARSING_MSG = "Parsing error";
   private static final Logger LOGGER = LogManager.getLogger(JSONUtils.class);
 
   /**
@@ -45,11 +46,11 @@ public class JSONUtils {
       ObjectMapper mapper = new ObjectMapper();
       rtn = mapper.writeValueAsString(map);
     } catch (JsonGenerationException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     } catch (JsonMappingException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     } catch (IOException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     }
 
     return rtn;
@@ -68,7 +69,7 @@ public class JSONUtils {
     try {
       json = mapper.writeValueAsString(clazz.cast(obj));
     } catch (JsonProcessingException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     }
 
     return json;
@@ -91,11 +92,11 @@ public class JSONUtils {
       ObjectMapper mapper = new ObjectMapper();
       rtn = mapper.writeValueAsString(list);
     } catch (JsonGenerationException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     } catch (JsonMappingException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     } catch (IOException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     }
 
     return rtn;
@@ -118,11 +119,11 @@ public class JSONUtils {
       ObjectMapper mapper = new ObjectMapper();
       rtn = mapper.writeValueAsString(list);
     } catch (JsonGenerationException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     } catch (JsonMappingException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     } catch (IOException e) {
-      LOGGER.error("Erreur de parsing", e);
+      LOGGER.error(ERROR_PARSING_MSG, e);
     }
 
     return rtn;
@@ -142,7 +143,7 @@ public class JSONUtils {
         ObjectMapper mapper = new ObjectMapper();
         rtn = mapper.readValue(json, new TypeReference<HashMap<String, String>>() {});
       } catch (Exception e) {
-        LOGGER.error("Erreur de parsing", e);
+        LOGGER.error(ERROR_PARSING_MSG, e);
       }
     }
 

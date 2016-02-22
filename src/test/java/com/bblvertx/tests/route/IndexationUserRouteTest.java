@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.bblvertx.persistence.QueryParam;
-import com.bblvertx.persistence.mapper.jdbc.UserMapper;
+import com.bblvertx.persistence.mapper.JdbcUserMapper;
 import com.bblvertx.pojo.vo.UserVO;
 import com.bblvertx.route.impl.JdbcIndexingUserRoute;
 import com.bblvertx.tests.AbstractTest;
@@ -115,7 +115,7 @@ public class IndexationUserRouteTest extends AbstractTest {
     vo = new UserVO();
     lstResults.add(vo);
 
-    when(dataSource.execute(anyString(), anyListOf(QueryParam.class), any(UserMapper.class)))
+    when(dataSource.execute(anyString(), anyListOf(QueryParam.class), any(JdbcUserMapper.class)))
         .thenReturn(lstResults, new ArrayList<UserVO>());
 
     route = new JdbcIndexingUserRoute("/route", "/text/html", router, ctx);

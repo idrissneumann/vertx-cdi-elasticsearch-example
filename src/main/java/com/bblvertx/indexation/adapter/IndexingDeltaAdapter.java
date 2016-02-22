@@ -1,8 +1,8 @@
-package com.bblvertx.indexation.adapter.jdbc;
-
-import java.io.Serializable;
+package com.bblvertx.indexation.adapter;
 
 import com.bblvertx.persistence.RowMapper;
+
+import java.io.Serializable;
 
 /**
  * Indexing delta job adapter.
@@ -14,18 +14,18 @@ import com.bblvertx.persistence.RowMapper;
  */
 public interface IndexingDeltaAdapter<T extends Serializable> extends IndexingAdapter<T> {
   /**
-   * Getting the "select flag" SQL query.
+   * Getting the "select flag" SQL/CQL query.
    * 
    * @return the query
    */
-  String getSQLSelectFlagIdx();
+  String getDbSelectFlagIdx();
 
   /**
    * Getting the "delete rs search" query.
    * 
    * @return the query
    */
-  String getSQLDeleteRsSearch();
+  String getDbDeleteRsSearch();
 
   /**
    * Getting a mapper for the id.

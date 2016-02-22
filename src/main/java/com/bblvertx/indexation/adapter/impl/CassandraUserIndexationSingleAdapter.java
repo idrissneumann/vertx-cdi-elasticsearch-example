@@ -1,42 +1,43 @@
 package com.bblvertx.indexation.adapter.impl;
 
+import static com.bblvertx.SeConstants.CQL_CONFIG_FILE;
 import static com.bblvertx.SeConstants.ES_INDEX_USER;
 import static com.bblvertx.SeConstants.SELECT_SINGLE_USER;
-import static com.bblvertx.SeConstants.SQL_CONFIG_FILE;
 import static com.bblvertx.SeConstants.UPDATE_RSSEARCH;
+
+import com.bblvertx.exception.TechnicalException;
+import com.bblvertx.indexation.adapter.AbstractIndexingAdapter;
+import com.bblvertx.persistence.mapper.JdbcUserMapper;
+import com.bblvertx.pojo.vo.UserVO;
+import com.bblvertx.utils.singleton.SeDataSource;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import java.io.IOException;
 
-import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.jdbc.AbstractIndexingAdapter;
-import com.bblvertx.persistence.mapper.jdbc.UserMapper;
-import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.utils.singleton.impl.RouteContext;
-
 /**
- * Adapter for user.
+ * Adapter for user in cassandra.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class UserIndexationSingleAdapter extends AbstractIndexingAdapter<UserVO> {
+public class CassandraUserIndexationSingleAdapter extends AbstractIndexingAdapter<UserVO> {
   /**
    * Constructor.
    * 
    * @param ctx
    */
-  public UserIndexationSingleAdapter(RouteContext ctx) {
+  public CassandraUserIndexationSingleAdapter(RouteContext ctx) {
     super(ctx);
-    rowMapper = new UserMapper();
+    rowMapper = new JdbcUserMapper();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String getSQLUpdateRsSearch() {
+  public String getDbUpdateRsSearch() {
     try {
-      return ctx.getProp().get(SQL_CONFIG_FILE, UPDATE_RSSEARCH);
+      return ctx.getProp().get(CQL_CONFIG_FILE, UPDATE_RSSEARCH);
     } catch (IOException e) {
       throw new TechnicalException(e);
     }
@@ -46,9 +47,9 @@ public class UserIndexationSingleAdapter extends AbstractIndexingAdapter<UserVO>
    * {@inheritDoc}
    */
   @Override
-  public String getSQLSelectValueObject() {
+  public String getDbSelectValueObject() {
     try {
-      return ctx.getProp().get(SQL_CONFIG_FILE, SELECT_SINGLE_USER);
+      return ctx.getProp().get(CQL_CONFIG_FILE, SELECT_SINGLE_USER);
     } catch (IOException e) {
       throw new TechnicalException(e);
     }
@@ -84,5 +85,13 @@ public class UserIndexationSingleAdapter extends AbstractIndexingAdapter<UserVO>
   @Override
   public String getId(UserVO valueObject) {
     return valueObject.getId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public SeDataSource getDataSource() {
+    return getRouteContext().getCassandraDataSource();
   }
 }

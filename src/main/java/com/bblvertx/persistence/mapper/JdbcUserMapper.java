@@ -1,4 +1,4 @@
-package com.bblvertx.persistence.mapper.jdbc;
+package com.bblvertx.persistence.mapper;
 
 import static com.bblvertx.utils.singleton.impl.JdbcDataSource.getDateFromRS;
 import static com.bblvertx.utils.singleton.impl.JdbcDataSource.getIntFromRS;
@@ -12,12 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Row mapper for chat users.
+ * Row mapper for users in jdbc compliant database.
  * 
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
-public class UserMapper implements RowMapper<UserVO> {
+public class JdbcUserMapper implements RowMapper<UserVO> {
   /**
    * {@inheritDoc}
    */

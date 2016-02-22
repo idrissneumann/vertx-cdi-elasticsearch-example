@@ -10,7 +10,7 @@ import static com.bblvertx.utils.JSONUtils.objectTojsonQuietly;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
 import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.jdbc.IndexingAdapter;
+import com.bblvertx.indexation.adapter.IndexingAdapter;
 import com.bblvertx.persistence.QueryParam;
 import com.bblvertx.persistence.QueryParamBuilder;
 import com.bblvertx.persistence.RowMapper;
@@ -35,8 +35,8 @@ import io.vertx.ext.web.Router;
  * @param <T> value object's type
  *
  */
-public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
-    extends AbstractJdbcIndexingRoute {
+public abstract class AbstractIndexingSingleRoute<T extends Serializable>
+    extends AbstractIndexingRoute {
   /**
    * Adapter pour les spécificités de chaque indexation.
    */
@@ -50,7 +50,7 @@ public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
    * @param router
    * @param ctx
    */
-  public AbstractJdbcIndexingSingleRoute(String url,
+  public AbstractIndexingSingleRoute(String url,
       String contentType,
       Router router,
       RouteContext ctx) {
@@ -76,8 +76,8 @@ public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
    */
   private void indexingNewData(Integer id) {
     try {
-      String sql = adapter.getSQLSelectValueObject();
-      String sqlUpdate = adapter.getSQLUpdateRsSearch();
+      String sql = adapter.getDbSelectValueObject();
+      String sqlUpdate = adapter.getDbUpdateRsSearch();
       Integer limit = Integer.valueOf(ctx.getProp().get(APP_CONFIG_FILE, DB_KEY_PAGINATION));
       Integer numRow = 0;
       List<T> lstResults = null;
@@ -111,7 +111,7 @@ public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        lstResults = ctx.getJdbcDataSource().execute(sql,
+        lstResults = adapter.getDataSource().execute(sql,
             pId.asList(pRsSearch.asList(pLimit.asList(pOffset.asList()))), mapper);
 
         if (isNotEmpty(lstResults)) {
@@ -137,7 +137,7 @@ public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        ctx.getJdbcDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
+        adapter.getDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
             pRsSearch2.asList());
       }
     } catch (Exception e) {

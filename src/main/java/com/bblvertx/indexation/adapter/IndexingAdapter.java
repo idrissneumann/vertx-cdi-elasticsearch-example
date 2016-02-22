@@ -1,9 +1,10 @@
-package com.bblvertx.indexation.adapter.jdbc;
-
-import java.io.Serializable;
+package com.bblvertx.indexation.adapter;
 
 import com.bblvertx.persistence.RowMapper;
+import com.bblvertx.utils.singleton.SeDataSource;
 import com.bblvertx.utils.singleton.impl.RouteContext;
+
+import java.io.Serializable;
 
 /**
  * Indexing adapter interface.
@@ -21,18 +22,18 @@ public interface IndexingAdapter<T extends Serializable> {
   RouteContext getRouteContext();
 
   /**
-   * Getting "update rs search" SQL query.
+   * Getting "update rs search" SQL/CQL query.
    * 
    * @return the query
    */
-  String getSQLUpdateRsSearch();
+  String getDbUpdateRsSearch();
 
   /**
-   * Getting "select value object" SQL query.
+   * Getting "select value object" SQL/CQL query.
    * 
    * @return the query
    */
-  String getSQLSelectValueObject();
+  String getDbSelectValueObject();
 
   /**
    * Getting index name.
@@ -69,4 +70,11 @@ public interface IndexingAdapter<T extends Serializable> {
    * @return the row mapper
    */
   RowMapper<T> getMapper();
+
+  /**
+   * Getting the datasource.
+   * 
+   * @return
+   */
+  SeDataSource getDataSource();
 }
