@@ -1,5 +1,7 @@
 package com.bblvertx.persistence;
 
+import static com.bblvertx.utils.CommonUtils.safeCompare;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,15 +108,7 @@ public class QueryParam implements Serializable, Comparable<QueryParam> {
    */
   @Override
   public int compareTo(QueryParam o) {
-    if (null == this.order && null == o.getOrder()) {
-      return 0;
-    } else if (null == this.order) {
-      return -1;
-    } else if (null == o.getOrder()) {
-      return 1;
-    } else {
-      return o.getOrder().compareTo(this.order);
-    }
+    return safeCompare(this.order, o.getOrder());
   }
 
   /**

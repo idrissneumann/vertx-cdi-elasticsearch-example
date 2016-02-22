@@ -30,7 +30,7 @@ public interface IndexingDeltaAdapter<T extends Serializable> extends IndexingAd
   /**
    * Getting a mapper for the id.
    * 
-   * @return RowMapper<Integer>
+   * @return RowMapper<Serializable>
    */
-  RowMapper<Integer> getIdMapper();
+  RowMapper<Serializable> getIdMapper();
 }

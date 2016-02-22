@@ -122,4 +122,20 @@ public class JdbcUserIndexationDeltaAdapter extends AbstractIndexingDeltaAdapter
   public SeDataSource getDataSource() {
     return getRouteContext().getJdbcDataSource();
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getOrderLimit() {
+    return 2;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getOrderOffset() {
+    return 3;
+  }
 }

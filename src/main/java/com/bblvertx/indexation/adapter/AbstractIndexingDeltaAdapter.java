@@ -1,9 +1,9 @@
 package com.bblvertx.indexation.adapter;
 
-import java.io.Serializable;
-
 import com.bblvertx.persistence.RowMapper;
 import com.bblvertx.utils.singleton.impl.RouteContext;
+
+import java.io.Serializable;
 
 /**
  * Abstract delta indexing adapter.
@@ -15,7 +15,7 @@ import com.bblvertx.utils.singleton.impl.RouteContext;
  */
 public abstract class AbstractIndexingDeltaAdapter<T extends Serializable>
     extends AbstractIndexingAdapter<T> implements IndexingDeltaAdapter<T> {
-  protected RowMapper<Integer> rowMapperId;
+  protected RowMapper<Serializable> rowMapperId;
 
   /**
    * Constructor.
@@ -30,7 +30,7 @@ public abstract class AbstractIndexingDeltaAdapter<T extends Serializable>
    * {@inheritDoc}
    */
   @Override
-  public RowMapper<Integer> getIdMapper() {
+  public RowMapper<Serializable> getIdMapper() {
     return rowMapperId;
   }
 }

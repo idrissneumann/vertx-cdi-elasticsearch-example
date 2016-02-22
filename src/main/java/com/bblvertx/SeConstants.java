@@ -56,7 +56,6 @@ public interface SeConstants {
   String CASS_KEYSPACE = "cassandra.keyspace";
   String CASS_BASE_DELAY_MS = "cassandra.base.delay.ms";
   String CASS_MAX_DELAY_MS = "cassandra.max.delay.ms";
-  String CASS_FETCH_SIZE = "cassandra.fetch.size";
 
   /**
    * Elastic Search

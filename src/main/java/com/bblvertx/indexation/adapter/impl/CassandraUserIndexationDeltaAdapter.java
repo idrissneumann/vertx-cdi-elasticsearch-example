@@ -9,8 +9,8 @@ import static com.bblvertx.SeConstants.UPDATE_RSSEARCH;
 
 import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.indexation.adapter.AbstractIndexingDeltaAdapter;
-import com.bblvertx.persistence.mapper.JdbcUserIdMapper;
-import com.bblvertx.persistence.mapper.JdbcUserMapper;
+import com.bblvertx.persistence.mapper.CassandraUserIdMapper;
+import com.bblvertx.persistence.mapper.CassandraUserMapper;
 import com.bblvertx.pojo.vo.UserVO;
 import com.bblvertx.utils.singleton.SeDataSource;
 import com.bblvertx.utils.singleton.impl.RouteContext;
@@ -31,8 +31,8 @@ public class CassandraUserIndexationDeltaAdapter extends AbstractIndexingDeltaAd
    */
   public CassandraUserIndexationDeltaAdapter(RouteContext ctx) {
     super(ctx);
-    rowMapper = new JdbcUserMapper();
-    rowMapperId = new JdbcUserIdMapper();
+    rowMapper = new CassandraUserMapper();
+    rowMapperId = new CassandraUserIdMapper();
   }
 
   /**
@@ -121,5 +121,21 @@ public class CassandraUserIndexationDeltaAdapter extends AbstractIndexingDeltaAd
   @Override
   public SeDataSource getDataSource() {
     return getRouteContext().getCassandraDataSource();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getOrderLimit() {
+    return 3;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getOrderOffset() {
+    return 2;
   }
 }

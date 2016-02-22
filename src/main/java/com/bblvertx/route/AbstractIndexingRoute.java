@@ -12,7 +12,6 @@ import io.vertx.ext.web.Router;
  */
 public abstract class AbstractIndexingRoute extends AbstractAsyncRoute {
   public final static String[] CODE_LANGUAGES = new String[] {"fr", "en", "ar"};
-  public final static String ID_TPL = "'%s'";
 
   /**
    * Constructor.

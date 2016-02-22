@@ -2,14 +2,15 @@ package com.bblvertx.utils.singleton.impl;
 
 import static com.bblvertx.SeConstants.APP_CONFIG_FILE;
 import static com.bblvertx.SeConstants.CASS_BASE_DELAY_MS;
-import static com.bblvertx.SeConstants.CASS_FETCH_SIZE;
 import static com.bblvertx.SeConstants.CASS_HOST;
 import static com.bblvertx.SeConstants.CASS_KEYSPACE;
 import static com.bblvertx.SeConstants.CASS_MAX_DELAY_MS;
 import static com.bblvertx.SeConstants.CASS_PASSWD;
 import static com.bblvertx.SeConstants.CASS_PORT;
 import static com.bblvertx.SeConstants.CASS_USERNAME;
+import static com.bblvertx.SeConstants.DB_KEY_PAGINATION;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
+import static org.apache.commons.lang3.StringUtils.countMatches;
 
 import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.persistence.QueryParam;
@@ -73,7 +74,7 @@ public class CassandraDataSource implements SeDataSource {
       Long baseDelayMs = prop.getLong(APP_CONFIG_FILE, CASS_BASE_DELAY_MS);
       Long maxDelayMs = prop.getLong(APP_CONFIG_FILE, CASS_MAX_DELAY_MS);
       KEYSPACE = prop.get(APP_CONFIG_FILE, CASS_KEYSPACE);
-      FETCH_SIZE = prop.getInt(APP_CONFIG_FILE, CASS_FETCH_SIZE);
+      FETCH_SIZE = prop.getInt(APP_CONFIG_FILE, DB_KEY_PAGINATION);
 
       LOGGER.info("Connecting...");
       InetSocketAddress address = new InetSocketAddress(host, port);
@@ -130,10 +131,15 @@ public class CassandraDataSource implements SeDataSource {
     Object[] arrayParams = null;
     if (isNotEmpty(params)) {
       Collections.sort(params);
-      arrayParams = new Object[params.size()];
+      arrayParams = new Object[countMatches(query, '?')];
       Integer i = 0;
 
       for (QueryParam p : params) {
+        if (i >= arrayParams.length) {
+          break;
+        }
+
+        LOGGER.info(p.toString());
         arrayParams[i] = p.getValue();
         i++;
       }
@@ -171,10 +177,14 @@ public class CassandraDataSource implements SeDataSource {
     Object[] arrayParams = null;
     if (isNotEmpty(params)) {
       Collections.sort(params);
-      arrayParams = new Object[params.size()];
+      arrayParams = new Object[countMatches(query, '?')];
       Integer i = 0;
 
       for (QueryParam p : params) {
+        if (i >= arrayParams.length) {
+          break;
+        }
+        LOGGER.info(p.toString());
         arrayParams[i] = p.getValue();
         i++;
       }
@@ -281,6 +291,18 @@ public class CassandraDataSource implements SeDataSource {
    */
   public static String getStringFromRS(Row rs, String name) {
     return rs.getString(name);
+  }
+
+  /**
+   * Getting a uuid rs value as string.
+   * 
+   * @param rs
+   * @param name
+   * @return String
+   * @throws SQLException
+   */
+  public static String getUuidFromRS(Row rs, String name) {
+    return rs.getUUID(name).toString();
   }
 
   /**

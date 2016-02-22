@@ -3,6 +3,7 @@ package com.bblvertx.persistence.mapper;
 import static com.bblvertx.utils.JSONUtils.ERROR_PARSING_MSG;
 import static com.bblvertx.utils.singleton.impl.CassandraDataSource.getIntFromRS;
 import static com.bblvertx.utils.singleton.impl.CassandraDataSource.getStringFromRS;
+import static com.bblvertx.utils.singleton.impl.CassandraDataSource.getUuidFromRS;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import com.bblvertx.persistence.RowMapper;
@@ -52,6 +53,7 @@ public class CassandraUserMapper implements RowMapper<UserVO> {
     Row cassandraRs = (Row) rs;
     UserVO rtn = json2UserQuietly(getStringFromRS(cassandraRs, "data"));
     rtn.setRsSearch(getIntFromRS(cassandraRs, "rs_search"));
+    rtn.setId(getUuidFromRS(cassandraRs, "uid"));
     return rtn;
   }
 }

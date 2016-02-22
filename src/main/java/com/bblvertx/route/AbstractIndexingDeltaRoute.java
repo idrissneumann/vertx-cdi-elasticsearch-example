@@ -62,8 +62,8 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
       String sql = adapter.getDbSelectFlagIdx();
       String sqlDelete = adapter.getDbDeleteRsSearch();
       Integer limit = Integer.valueOf(ctx.getProp().get(APP_CONFIG_FILE, DB_KEY_PAGINATION));
-      Integer numRow = 0;
-      List<Integer> lstResults = null;
+      Integer offset = 0;
+      List<Serializable> lstResults = null;
 
       QueryParam pRsSearch = new QueryParamBuilder() //
           .add("order", 1, Integer.class) //
@@ -72,7 +72,7 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
           .getParam();
 
       QueryParam pLimit = new QueryParamBuilder() //
-          .add("order", 2, Integer.class) //
+          .add("order", adapter.getOrderLimit(), Integer.class) //
           .add("value", limit, Object.class) //
           .add("clazz", Integer.class, Class.class) //
           .getParam();
@@ -82,8 +82,8 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
       StringJoiner idElems = new StringJoiner(",");
       do {
         pOffset = new QueryParamBuilder() //
-            .add("order", 3, Integer.class) //
-            .add("value", numRow, Object.class) //
+            .add("order", adapter.getOrderOffset(), Integer.class) //
+            .add("value", offset, Object.class) //
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
@@ -91,18 +91,18 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
             pRsSearch.asList(pLimit.asList(pOffset.asList())), adapter.getIdMapper());
 
         if (isNotEmpty(lstResults)) {
-          for (Integer idElem : lstResults) {
+          for (Serializable idElem : lstResults) {
             ctx.getEsClient() //
                 .getClient() //
                 .prepareDelete(adapter.getIndexName(), adapter.getIndexType(),
                     String.valueOf(idElem)) //
                 .execute().actionGet();
 
-            idElems.add(String.format(ID_TPL, String.valueOf(idElem)));
+            idElems.add(idElem.toString());
           }
         }
 
-        numRow += limit;
+        offset += limit;
       } while (isNotEmpty(lstResults));
 
       if (idElems.length() > 0) {
@@ -121,7 +121,7 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
       String sql = adapter.getDbSelectValueObject();
       String sqlUpdate = adapter.getDbUpdateRsSearch();
       Integer limit = Integer.valueOf(ctx.getProp().get(APP_CONFIG_FILE, DB_KEY_PAGINATION));
-      Integer numRow = 0;
+      Integer offset = 0;
       List<T> lstResults = null;
       RowMapper<T> mapper = adapter.getMapper();
 
@@ -132,7 +132,7 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
           .getParam();
 
       QueryParam pLimit = new QueryParamBuilder() //
-          .add("order", 2, Integer.class) //
+          .add("order", adapter.getOrderLimit(), Integer.class) //
           .add("value", limit, Object.class) //
           .add("clazz", Integer.class, Class.class) //
           .getParam();
@@ -142,8 +142,8 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
       StringJoiner idElems = new StringJoiner(",");
       do {
         pOffset = new QueryParamBuilder() //
-            .add("order", 3, Integer.class) //
-            .add("value", numRow, Object.class) //
+            .add("order", adapter.getOrderOffset(), Integer.class) //
+            .add("value", offset, Object.class) //
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
@@ -159,11 +159,11 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
                 .execute() //
                 .actionGet();
 
-            idElems.add(String.format(ID_TPL, adapter.getId(object)));
+            idElems.add(adapter.getId(object));
           }
         }
 
-        numRow += limit;
+        offset += limit;
       } while (isNotEmpty(lstResults));
 
       if (idElems.length() > 0) {

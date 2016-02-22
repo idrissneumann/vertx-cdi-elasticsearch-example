@@ -1,4 +1,4 @@
-INSERT INTO t_user(id, rs_search, data) VALUES (4, 1, '{
+INSERT INTO t_user(uid, id, rs_search, data) VALUES (now(), 1, 1, '{
    "name": "Ahmed from cassandra",
    "firstname": "Ben Mansour",
    "email": "ahmed.benmansour@domain.com",
@@ -10,7 +10,7 @@ INSERT INTO t_user(id, rs_search, data) VALUES (4, 1, '{
    "randomId": "bb40c588-b5c1-45c1-b725-fd1fd5aa986f"
 }');
 
-INSERT INTO t_user(id, rs_search, data) VALUES (5, 1, '{
+INSERT INTO t_user(uid, id, rs_search, data) VALUES (now(), 2, 1, '{
    "name": "Liu from cassandra",
    "firstname": "Chia-lang",
    "email": "liu@domain.com",

@@ -7,7 +7,7 @@ import static com.bblvertx.SeConstants.UPDATE_RSSEARCH;
 
 import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.indexation.adapter.AbstractIndexingAdapter;
-import com.bblvertx.persistence.mapper.JdbcUserMapper;
+import com.bblvertx.persistence.mapper.CassandraUserMapper;
 import com.bblvertx.pojo.vo.UserVO;
 import com.bblvertx.utils.singleton.SeDataSource;
 import com.bblvertx.utils.singleton.impl.RouteContext;
@@ -28,7 +28,7 @@ public class CassandraUserIndexationSingleAdapter extends AbstractIndexingAdapte
    */
   public CassandraUserIndexationSingleAdapter(RouteContext ctx) {
     super(ctx);
-    rowMapper = new JdbcUserMapper();
+    rowMapper = new CassandraUserMapper();
   }
 
   /**
@@ -93,5 +93,21 @@ public class CassandraUserIndexationSingleAdapter extends AbstractIndexingAdapte
   @Override
   public SeDataSource getDataSource() {
     return getRouteContext().getCassandraDataSource();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getOrderLimit() {
+    return 3;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getOrderOffset() {
+    return 2;
   }
 }

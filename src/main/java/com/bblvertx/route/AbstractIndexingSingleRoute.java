@@ -79,7 +79,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
       String sql = adapter.getDbSelectValueObject();
       String sqlUpdate = adapter.getDbUpdateRsSearch();
       Integer limit = Integer.valueOf(ctx.getProp().get(APP_CONFIG_FILE, DB_KEY_PAGINATION));
-      Integer numRow = 0;
+      Integer offset = 0;
       List<T> lstResults = null;
       RowMapper<T> mapper = adapter.getMapper();
 
@@ -96,7 +96,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
           .getParam();
 
       QueryParam pLimit = new QueryParamBuilder() //
-          .add("order", 3, Integer.class) //
+          .add("order", adapter.getOrderLimit() + 1, Integer.class) //
           .add("value", limit, Object.class) //
           .add("clazz", Integer.class, Class.class) //
           .getParam();
@@ -106,8 +106,8 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
 
       do {
         pOffset = new QueryParamBuilder() //
-            .add("order", 4, Integer.class) //
-            .add("value", numRow, Object.class) //
+            .add("order", adapter.getOrderOffset() + 1, Integer.class) //
+            .add("value", offset, Object.class) //
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
@@ -123,11 +123,11 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
                 .execute() //
                 .actionGet();
 
-            idElems.add(String.format(ID_TPL, adapter.getId(elem)));
+            idElems.add(adapter.getId(elem));
           }
         }
 
-        numRow += limit;
+        offset += limit;
       } while (isNotEmpty(lstResults));
 
       if (idElems.length() > 0) {

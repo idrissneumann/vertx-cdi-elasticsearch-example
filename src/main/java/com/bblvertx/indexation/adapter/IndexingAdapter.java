@@ -77,4 +77,18 @@ public interface IndexingAdapter<T extends Serializable> {
    * @return
    */
   SeDataSource getDataSource();
+
+  /**
+   * Getting the order limit.
+   * 
+   * @return Integer
+   */
+  Integer getOrderLimit();
+
+  /**
+   * Getting the order offset.
+   * 
+   * @return Integer
+   */
+  Integer getOrderOffset();
 }
