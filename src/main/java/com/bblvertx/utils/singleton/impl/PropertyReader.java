@@ -70,6 +70,19 @@ public class PropertyReader {
   }
 
   /**
+   * Getting the value as long.
+   * 
+   * @param fileName
+   * @param key
+   * @return Integer
+   * @throws IOException
+   */
+  public Long getLong(String fileName, String key) throws IOException {
+    String val = this.get(fileName, key);
+    return (!isNumeric(val)) ? null : Long.valueOf(val);
+  }
+
+  /**
    * Getting the value quietly (return null if not exists).
    * 
    * @param fileName
@@ -96,6 +109,22 @@ public class PropertyReader {
   public Integer getIntQuietly(String fileName, String key) {
     try {
       return this.getInt(fileName, key);
+    } catch (IOException e) {
+      return null;
+    }
+  }
+
+  /**
+   * Getting the value as Long quietly (return null if not exists).
+   * 
+   * @param fileName
+   * @param key
+   * @return Integer
+   * @throws IOException
+   */
+  public Long getLongQuietly(String fileName, String key) {
+    try {
+      return this.getLong(fileName, key);
     } catch (IOException e) {
       return null;
     }
