@@ -28,7 +28,6 @@ import com.datastax.driver.core.policies.ExponentialReconnectionPolicy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -74,11 +73,10 @@ public class CassandraDataSource implements SeDataSource {
       KEYSPACE = prop.get(APP_CONFIG_FILE, CASS_KEYSPACE);
       FETCH_SIZE = prop.getInt(APP_CONFIG_FILE, CASS_FETCH_SIZE);
 
+      LOGGER.info("Connecting...");
       InetSocketAddress address = new InetSocketAddress(host, port);
 
       LOGGER.debug("Instantiate a SimpleClient connecting to {}", address);
-      LOGGER.info("Connecting...");
-
       cluster = Cluster.builder() //
           .addContactPointsWithPorts(Arrays.asList(address)) //
           .withCredentials(username, password) //
@@ -95,8 +93,8 @@ public class CassandraDataSource implements SeDataSource {
 
       session = cluster.connect();
       LOGGER.info("Connected");
-    } catch (IOException e) {
-      throw new TechnicalException(e);
+    } catch (Exception e) {
+      LOGGER.error("Unable to connect to cassandra database : {}", e.getMessage());
     }
   }
 

@@ -18,7 +18,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -44,6 +43,7 @@ import javax.sql.DataSource;
  */
 @Singleton
 public class JdbcDataSource implements SeDataSource {
+  private static final String SELECT_TEST_CONNECTION = "SELECT 1 AS nb";
   private static final Logger LOGGER = LogManager.getLogger(JdbcDataSource.class);
 
   @Inject
@@ -67,9 +67,27 @@ public class JdbcDataSource implements SeDataSource {
       dataSource.setMaxIdle(prop.getInt(APP_CONFIG_FILE, DB_KEY_MIN_POOL_SIZE));
       dataSource.setMaxTotal(prop.getInt(APP_CONFIG_FILE, DB_KEY_MAX_POOL_SIZE));
       dataSource.setPoolPreparedStatements(true);
-    } catch (IOException e) {
-      throw new TechnicalException(e);
+
+      testConnection();
+    } catch (Exception e) {
+      LOGGER.error("Unable to connect to JDBC compliant database : {}", e.getMessage());
     }
+  }
+
+  /**
+   * Testing the connection.
+   */
+  private void testConnection() {
+    execute(SELECT_TEST_CONNECTION, new RowMapper<Integer>() {
+      @Override
+      public Integer map(Object rs) {
+        try {
+          return JdbcDataSource.getIntFromRS((ResultSet) rs, "nb");
+        } catch (SQLException e) {
+          throw new TechnicalException(e);
+        }
+      }
+    });
   }
 
   /**

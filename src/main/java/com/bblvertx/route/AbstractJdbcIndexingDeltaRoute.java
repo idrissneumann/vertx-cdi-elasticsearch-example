@@ -85,7 +85,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        lstResults = ctx.getDataSource().execute(sql,
+        lstResults = ctx.getJdbcDataSource().execute(sql,
             pRsSearch.asList(pLimit.asList(pOffset.asList())), adapter.getIdMapper());
 
         if (isNotEmpty(lstResults)) {
@@ -104,7 +104,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
       } while (isNotEmpty(lstResults));
 
       if (idElems.length() > 0) {
-        ctx.getDataSource().executeUpdate(String.format(sqlDelete, idElems.toString()));
+        ctx.getJdbcDataSource().executeUpdate(String.format(sqlDelete, idElems.toString()));
       }
     } catch (Exception e) {
       throw new TechnicalException(e);
@@ -145,7 +145,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        lstResults = ctx.getDataSource().execute(sql,
+        lstResults = ctx.getJdbcDataSource().execute(sql,
             pRsSearch.asList(pLimit.asList(pOffset.asList())), mapper);
 
         if (isNotEmpty(lstResults)) {
@@ -171,7 +171,7 @@ public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        ctx.getDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
+        ctx.getJdbcDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
             pRsSearch2.asList());
       }
     } catch (Exception e) {

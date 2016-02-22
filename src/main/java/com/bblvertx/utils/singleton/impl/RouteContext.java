@@ -12,7 +12,10 @@ import javax.inject.Singleton;
 @Singleton
 public class RouteContext {
   @Inject
-  private JdbcDataSource dataSource;
+  private JdbcDataSource dataJdbcSource;
+
+  @Inject
+  private CassandraDataSource cassandraDataSource;
 
   @Inject
   private PropertyReader prop;
@@ -23,15 +26,15 @@ public class RouteContext {
   /**
    * @return the dataSource
    */
-  public JdbcDataSource getDataSource() {
-    return dataSource;
+  public JdbcDataSource getJdbcDataSource() {
+    return dataJdbcSource;
   }
 
   /**
    * @param dataSource the dataSource to set
    */
-  public void setDataSource(JdbcDataSource dataSource) {
-    this.dataSource = dataSource;
+  public void setJdbcDataSource(JdbcDataSource dataSource) {
+    this.dataJdbcSource = dataSource;
   }
 
   /**

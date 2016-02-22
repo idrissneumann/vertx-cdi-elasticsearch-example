@@ -111,7 +111,7 @@ public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        lstResults = ctx.getDataSource().execute(sql,
+        lstResults = ctx.getJdbcDataSource().execute(sql,
             pId.asList(pRsSearch.asList(pLimit.asList(pOffset.asList()))), mapper);
 
         if (isNotEmpty(lstResults)) {
@@ -137,7 +137,7 @@ public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
             .add("clazz", Integer.class, Class.class) //
             .getParam();
 
-        ctx.getDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
+        ctx.getJdbcDataSource().executeUpdate(String.format(sqlUpdate, idElems.toString()),
             pRsSearch2.asList());
       }
     } catch (Exception e) {

@@ -1,6 +1,5 @@
 package com.bblvertx.utils.singleton;
 
-import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.persistence.QueryParam;
 import com.bblvertx.persistence.RowMapper;
 
@@ -17,7 +16,7 @@ public interface SeDataSource {
   /**
    * Initializing connection with the database.
    */
-  void init() throws TechnicalException;
+  void init();
 
   /**
    * Fetching the result of a SQL query with a row mapper.

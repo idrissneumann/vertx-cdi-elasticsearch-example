@@ -1,5 +1,6 @@
 package com.bblvertx.ioc;
 
+import com.bblvertx.utils.singleton.impl.CassandraDataSource;
 import com.bblvertx.utils.singleton.impl.ESClient;
 import com.bblvertx.utils.singleton.impl.JdbcDataSource;
 import com.bblvertx.utils.singleton.impl.PropertyReader;
@@ -24,6 +25,8 @@ public class SeBinder extends AbstractBinder {
     bind(PropertyReader.class).to(PropertyReader.class).in(Singleton.class);
 
     bind(JdbcDataSource.class).to(JdbcDataSource.class).in(Singleton.class);
+
+    bind(CassandraDataSource.class).to(CassandraDataSource.class).in(Singleton.class);
 
     bind(ESClient.class).to(ESClient.class).in(Singleton.class);
 

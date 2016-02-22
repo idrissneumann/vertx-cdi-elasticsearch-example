@@ -94,7 +94,7 @@ public class IndexationUserRouteTest extends AbstractTest {
   @SuppressWarnings("unchecked")
   @Before
   public final void initIocAndData() {
-    when(ctx.getDataSource()).thenReturn(dataSource);
+    when(ctx.getJdbcDataSource()).thenReturn(dataSource);
     when(ctx.getEsClient()).thenReturn(esClient);
     when(ctx.getProp()).thenReturn(prop);
     when(router.get(anyString())).thenReturn(routeMock);

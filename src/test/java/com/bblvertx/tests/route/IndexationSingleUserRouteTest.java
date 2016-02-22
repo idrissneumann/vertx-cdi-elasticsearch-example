@@ -95,7 +95,7 @@ public class IndexationSingleUserRouteTest extends AbstractTest {
   @Before
   public final void initIocAndData() {
     when(requestMock.getParam(anyString())).thenReturn("1");
-    when(ctx.getDataSource()).thenReturn(dataSource);
+    when(ctx.getJdbcDataSource()).thenReturn(dataSource);
     when(ctx.getEsClient()).thenReturn(esClient);
     when(ctx.getProp()).thenReturn(prop);
     when(router.get(anyString())).thenReturn(routeMock);
