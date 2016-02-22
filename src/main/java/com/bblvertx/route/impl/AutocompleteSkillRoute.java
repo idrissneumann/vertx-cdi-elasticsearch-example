@@ -3,7 +3,7 @@ package com.bblvertx.route.impl;
 import static com.bblvertx.SeConstants.ES_INDEX_USER;
 
 import com.bblvertx.route.AbstractSearchSingleFieldRoute;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;

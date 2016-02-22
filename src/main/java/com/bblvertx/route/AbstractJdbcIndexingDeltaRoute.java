@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.IndexingDeltaAdapter;
+import com.bblvertx.indexation.adapter.jdbc.IndexingDeltaAdapter;
 import com.bblvertx.persistence.QueryParam;
 import com.bblvertx.persistence.QueryParamBuilder;
 import com.bblvertx.persistence.RowMapper;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
@@ -31,8 +31,8 @@ import io.vertx.ext.web.Router;
  *
  * @param <T> value object's type
  */
-public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
-    extends AbstractIndexingRoute {
+public abstract class AbstractJdbcIndexingDeltaRoute<T extends Serializable>
+    extends AbstractJdbcIndexingRoute {
 
   /**
    * Adapter for the specificity of each object which will be indexed.
@@ -47,7 +47,7 @@ public abstract class AbstractIndexingDeltaRoute<T extends Serializable>
    * @param router
    * @param ctx
    */
-  public AbstractIndexingDeltaRoute(String url, String contentType, Router router,
+  public AbstractJdbcIndexingDeltaRoute(String url, String contentType, Router router,
       RouteContext ctx) {
     super(url, contentType, router, ctx);
   }

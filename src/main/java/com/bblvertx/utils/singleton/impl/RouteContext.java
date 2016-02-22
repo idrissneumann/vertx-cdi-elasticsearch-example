@@ -1,4 +1,4 @@
-package com.bblvertx.utils.singleton;
+package com.bblvertx.utils.singleton.impl;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 @Singleton
 public class RouteContext {
   @Inject
-  private SeDataSource dataSource;
+  private JdbcDataSource dataSource;
 
   @Inject
   private PropertyReader prop;
@@ -23,14 +23,14 @@ public class RouteContext {
   /**
    * @return the dataSource
    */
-  public SeDataSource getDataSource() {
+  public JdbcDataSource getDataSource() {
     return dataSource;
   }
 
   /**
    * @param dataSource the dataSource to set
    */
-  public void setDataSource(SeDataSource dataSource) {
+  public void setDataSource(JdbcDataSource dataSource) {
     this.dataSource = dataSource;
   }
 

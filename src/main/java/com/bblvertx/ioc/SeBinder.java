@@ -1,13 +1,13 @@
 package com.bblvertx.ioc;
 
-import javax.inject.Singleton;
+import com.bblvertx.utils.singleton.impl.ESClient;
+import com.bblvertx.utils.singleton.impl.JdbcDataSource;
+import com.bblvertx.utils.singleton.impl.PropertyReader;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
-import com.bblvertx.utils.singleton.ESClient;
-import com.bblvertx.utils.singleton.PropertyReader;
-import com.bblvertx.utils.singleton.RouteContext;
-import com.bblvertx.utils.singleton.SeDataSource;
+import javax.inject.Singleton;
 
 /**
  * Init of lifecycle beans context.
@@ -23,7 +23,7 @@ public class SeBinder extends AbstractBinder {
   protected void configure() {
     bind(PropertyReader.class).to(PropertyReader.class).in(Singleton.class);
 
-    bind(SeDataSource.class).to(SeDataSource.class).in(Singleton.class);
+    bind(JdbcDataSource.class).to(JdbcDataSource.class).in(Singleton.class);
 
     bind(ESClient.class).to(ESClient.class).in(Singleton.class);
 

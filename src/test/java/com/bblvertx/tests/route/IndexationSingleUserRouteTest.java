@@ -11,15 +11,17 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import io.vertx.core.http.HttpServerRequest;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.ext.web.Route;
-import io.vertx.ext.web.Router;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.bblvertx.persistence.QueryParam;
+import com.bblvertx.persistence.mapper.jdbc.UserMapper;
+import com.bblvertx.pojo.vo.UserVO;
+import com.bblvertx.route.impl.JdbcIndexingSingleUserRoute;
+import com.bblvertx.tests.AbstractTest;
+import com.bblvertx.utils.JSONUtils;
+import com.bblvertx.utils.singleton.impl.ESClient;
+import com.bblvertx.utils.singleton.impl.JdbcDataSource;
+import com.bblvertx.utils.singleton.impl.PropertyReader;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.index.IndexRequestBuilder;
@@ -30,16 +32,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.bblvertx.persistence.QueryParam;
-import com.bblvertx.persistence.mapper.UserMapper;
-import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.route.impl.IndexingSingleUserRoute;
-import com.bblvertx.tests.AbstractTest;
-import com.bblvertx.utils.JSONUtils;
-import com.bblvertx.utils.singleton.ESClient;
-import com.bblvertx.utils.singleton.PropertyReader;
-import com.bblvertx.utils.singleton.RouteContext;
-import com.bblvertx.utils.singleton.SeDataSource;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import io.vertx.ext.web.Route;
+import io.vertx.ext.web.Router;
 
 /**
  * Tests sur la route IndexationChatUserRoute.
@@ -49,104 +49,98 @@ import com.bblvertx.utils.singleton.SeDataSource;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class IndexationSingleUserRouteTest extends AbstractTest {
-	private IndexingSingleUserRoute route;
+  private JdbcIndexingSingleUserRoute route;
 
-	@Mock
-	private Route routeMock;
+  @Mock
+  private Route routeMock;
 
-	@Mock
-	private RouteContext ctx;
+  @Mock
+  private RouteContext ctx;
 
-	@Mock
-	private SeDataSource dataSource;
+  @Mock
+  private JdbcDataSource dataSource;
 
-	@Mock
-	private PropertyReader prop;
+  @Mock
+  private PropertyReader prop;
 
-	@Mock
-	private ESClient esClient;
+  @Mock
+  private ESClient esClient;
 
-	@Mock
-	private Router router;
+  @Mock
+  private Router router;
 
-	@Mock
-	private TransportClient tClient;
+  @Mock
+  private TransportClient tClient;
 
-	@Mock
-	private IndexRequestBuilder indexRequestBuilder;
+  @Mock
+  private IndexRequestBuilder indexRequestBuilder;
 
-	@Mock
-	private HttpServerRequest requestMock;
+  @Mock
+  private HttpServerRequest requestMock;
 
-	@Mock
-	private HttpServerResponse responseMock;
+  @Mock
+  private HttpServerResponse responseMock;
 
-	@SuppressWarnings("rawtypes")
-	@Mock
-	private ListenableActionFuture listenable;
+  @SuppressWarnings("rawtypes")
+  @Mock
+  private ListenableActionFuture listenable;
 
-	private List<UserVO> lstResults = null;
-	private UserVO vo = null;
+  private List<UserVO> lstResults = null;
+  private UserVO vo = null;
 
-	/**
-	 * Initialisation des mocks et injection de dépendance.
-	 */
-	@SuppressWarnings("unchecked")
-	@Before
-	public final void initIocAndData() {
-		when(requestMock.getParam(anyString())).thenReturn("1");
-		when(ctx.getDataSource()).thenReturn(dataSource);
-		when(ctx.getEsClient()).thenReturn(esClient);
-		when(ctx.getProp()).thenReturn(prop);
-		when(router.get(anyString())).thenReturn(routeMock);
-		when(esClient.getClient()).thenReturn(tClient);
-		when(tClient.prepareIndex(anyString(), anyString(), anyString())).thenReturn(indexRequestBuilder);
-		when(indexRequestBuilder.setSource(anyString())).thenReturn(indexRequestBuilder);
-		when(indexRequestBuilder.execute()).thenReturn(listenable);
+  /**
+   * Initialisation des mocks et injection de dépendance.
+   */
+  @SuppressWarnings("unchecked")
+  @Before
+  public final void initIocAndData() {
+    when(requestMock.getParam(anyString())).thenReturn("1");
+    when(ctx.getDataSource()).thenReturn(dataSource);
+    when(ctx.getEsClient()).thenReturn(esClient);
+    when(ctx.getProp()).thenReturn(prop);
+    when(router.get(anyString())).thenReturn(routeMock);
+    when(esClient.getClient()).thenReturn(tClient);
+    when(tClient.prepareIndex(anyString(), anyString(), anyString()))
+        .thenReturn(indexRequestBuilder);
+    when(indexRequestBuilder.setSource(anyString())).thenReturn(indexRequestBuilder);
+    when(indexRequestBuilder.execute()).thenReturn(listenable);
 
-		try {
-			when(prop.get(APP_CONFIG_FILE, DB_KEY_PAGINATION)).thenReturn("1");
-			when(prop.get(eq(SQL_CONFIG_FILE), anyString())).thenReturn("select blabla");
-		} catch (IOException e) {
-			failWithException(e);
-		}
+    try {
+      when(prop.get(APP_CONFIG_FILE, DB_KEY_PAGINATION)).thenReturn("1");
+      when(prop.get(eq(SQL_CONFIG_FILE), anyString())).thenReturn("select blabla");
+    } catch (IOException e) {
+      failWithException(e);
+    }
 
-		lstResults = new ArrayList<UserVO>();
-		vo = new UserVO();
-		lstResults.add(vo);
+    lstResults = new ArrayList<UserVO>();
+    vo = new UserVO();
+    lstResults.add(vo);
 
-		try {
-			when(dataSource.execute(anyString(), anyListOf(QueryParam.class), any(UserMapper.class))).thenReturn(lstResults, new ArrayList<UserVO>());
-		} catch (SQLException e) {
-			failWithException(e);
-		}
+    when(dataSource.execute(anyString(), anyListOf(QueryParam.class), any(UserMapper.class)))
+        .thenReturn(lstResults, new ArrayList<UserVO>());
 
-		route = new IndexingSingleUserRoute("/route", "/application/json", router, ctx);
-	}
+    route = new JdbcIndexingSingleUserRoute("/route", "/application/json", router, ctx);
+  }
 
-	/**
-	 * Test de la méthode proceed.
-	 */
-	@Test
-	public final void testProceed() {
-		String response = route.proceed(requestMock, responseMock);
-		assertEquals(JSONUtils.objectTojsonQuietly("Indexation en cours...", String.class), response);
-	}
+  /**
+   * Test de la méthode proceed.
+   */
+  @Test
+  public final void testProceed() {
+    String response = route.proceed(requestMock, responseMock);
+    assertEquals(JSONUtils.objectTojsonQuietly("Indexation en cours...", String.class), response);
+  }
 
-	/**
-	 * Test de la méthode proceedAsync
-	 */
-	@Test
-	public final void testProceedAsync() {
-		route.proceedAsync(requestMock, responseMock);
+  /**
+   * Test de la méthode proceedAsync
+   */
+  @Test
+  public final void testProceedAsync() {
+    route.proceedAsync(requestMock, responseMock);
 
-		// assertions sur les mocks
-		try {
-			verify(dataSource, times(2)).execute(anyString(), anyListOf(QueryParam.class), any());
-		} catch (SQLException e) {
-			failWithException(e);
-		}
+    // assertions sur les mocks
+    verify(dataSource, times(2)).execute(anyString(), anyListOf(QueryParam.class), any());
 
-		verify(tClient).prepareIndex(anyString(), anyString(), anyString());
-	}
+    verify(tClient).prepareIndex(anyString(), anyString(), anyString());
+  }
 }

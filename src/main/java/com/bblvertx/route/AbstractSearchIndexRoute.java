@@ -2,9 +2,9 @@ package com.bblvertx.route;
 
 import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 
-import org.elasticsearch.index.query.QueryBuilder;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
-import com.bblvertx.utils.singleton.RouteContext;
+import org.elasticsearch.index.query.QueryBuilder;
 
 import io.vertx.ext.web.Router;
 

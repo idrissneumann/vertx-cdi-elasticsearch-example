@@ -20,7 +20,7 @@ import com.bblvertx.exception.TechnicalException;
 import com.bblvertx.pojo.SearchResult;
 import com.bblvertx.pojo.vo.UserVO;
 import com.bblvertx.route.AbstractSearchIndexRoute;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

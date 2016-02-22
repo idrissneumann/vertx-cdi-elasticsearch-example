@@ -1,4 +1,4 @@
-package com.bblvertx.utils.singleton;
+package com.bblvertx.utils.singleton.impl;
 
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 

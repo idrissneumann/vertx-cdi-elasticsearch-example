@@ -1,4 +1,4 @@
-package com.bblvertx.indexation.adapter;
+package com.bblvertx.indexation.adapter.jdbc;
 
 import java.io.Serializable;
 

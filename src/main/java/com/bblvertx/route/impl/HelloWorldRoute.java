@@ -3,7 +3,7 @@ package com.bblvertx.route.impl;
 import static com.bblvertx.SeConstants.RESPONSE_HTML_TEMPLATE;
 
 import com.bblvertx.route.AbstractRoute;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;

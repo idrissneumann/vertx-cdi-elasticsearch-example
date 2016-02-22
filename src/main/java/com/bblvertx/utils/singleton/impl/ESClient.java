@@ -1,4 +1,4 @@
-package com.bblvertx.utils.singleton;
+package com.bblvertx.utils.singleton.impl;
 
 import static com.bblvertx.SeConstants.APP_CONFIG_FILE;
 import static com.bblvertx.SeConstants.ES_KEY_CLUSTER;

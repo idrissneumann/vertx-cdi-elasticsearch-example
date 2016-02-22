@@ -1,8 +1,6 @@
 package com.bblvertx.persistence;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * Mapping between database and VO.
@@ -17,7 +15,6 @@ public interface RowMapper<T extends Serializable> {
    * 
    * @param rs
    * @return T
-   * @throws SQLException
    */
-  T map(ResultSet rs) throws SQLException;
+  T map(Object rs);
 }

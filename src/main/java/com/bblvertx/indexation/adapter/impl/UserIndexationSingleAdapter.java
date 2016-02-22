@@ -8,10 +8,10 @@ import static com.bblvertx.SeConstants.UPDATE_RSSEARCH;
 import java.io.IOException;
 
 import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.AbstractIndexingAdapter;
-import com.bblvertx.persistence.mapper.UserMapper;
+import com.bblvertx.indexation.adapter.jdbc.AbstractIndexingAdapter;
+import com.bblvertx.persistence.mapper.jdbc.UserMapper;
 import com.bblvertx.pojo.vo.UserVO;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 /**
  * Adapter for user.

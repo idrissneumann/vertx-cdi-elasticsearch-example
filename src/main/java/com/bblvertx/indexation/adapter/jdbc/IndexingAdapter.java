@@ -1,9 +1,9 @@
-package com.bblvertx.indexation.adapter;
+package com.bblvertx.indexation.adapter.jdbc;
 
 import java.io.Serializable;
 
 import com.bblvertx.persistence.RowMapper;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 /**
  * Indexing adapter interface.

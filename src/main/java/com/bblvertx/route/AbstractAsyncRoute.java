@@ -2,10 +2,10 @@ package com.bblvertx.route;
 
 import static com.bblvertx.SeConstants.PREFIX_URL;
 
+import com.bblvertx.utils.singleton.impl.RouteContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.bblvertx.utils.singleton.RouteContext;
 
 import io.vertx.ext.web.Router;
 

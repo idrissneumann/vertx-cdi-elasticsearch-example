@@ -9,15 +9,15 @@ import static com.bblvertx.SeConstants.KEY_TPL_ROUTE_CONTENT_TYPE;
 import static com.bblvertx.SeConstants.KEY_TPL_ROUTE_URL;
 import static com.bblvertx.SeConstants.ROUTE_CONFIG_FILE;
 
+import com.bblvertx.utils.singleton.impl.PropertyReader;
+import com.bblvertx.utils.singleton.impl.RouteContext;
+
 import java.lang.reflect.Constructor;
 
 import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.bblvertx.utils.singleton.PropertyReader;
-import com.bblvertx.utils.singleton.RouteContext;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;

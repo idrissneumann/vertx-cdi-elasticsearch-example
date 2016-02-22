@@ -10,12 +10,12 @@ import static com.bblvertx.utils.JSONUtils.objectTojsonQuietly;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
 import com.bblvertx.exception.TechnicalException;
-import com.bblvertx.indexation.adapter.IndexingAdapter;
+import com.bblvertx.indexation.adapter.jdbc.IndexingAdapter;
 import com.bblvertx.persistence.QueryParam;
 import com.bblvertx.persistence.QueryParamBuilder;
 import com.bblvertx.persistence.RowMapper;
 import com.bblvertx.utils.JSONUtils;
-import com.bblvertx.utils.singleton.RouteContext;
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,8 +35,8 @@ import io.vertx.ext.web.Router;
  * @param <T> value object's type
  *
  */
-public abstract class AbstractIndexingSingleRoute<T extends Serializable>
-    extends AbstractIndexingRoute {
+public abstract class AbstractJdbcIndexingSingleRoute<T extends Serializable>
+    extends AbstractJdbcIndexingRoute {
   /**
    * Adapter pour les spécificités de chaque indexation.
    */
@@ -50,7 +50,7 @@ public abstract class AbstractIndexingSingleRoute<T extends Serializable>
    * @param router
    * @param ctx
    */
-  public AbstractIndexingSingleRoute(String url,
+  public AbstractJdbcIndexingSingleRoute(String url,
       String contentType,
       Router router,
       RouteContext ctx) {
