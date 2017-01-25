@@ -2,10 +2,10 @@ package com.bblvertx.route;
 
 import static com.bblvertx.SeConstants.PREFIX_URL;
 
-import com.bblvertx.utils.singleton.impl.RouteContext;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.bblvertx.utils.singleton.impl.RouteContext;
 
 import io.vertx.ext.web.Router;
 
@@ -34,12 +34,9 @@ public abstract class AbstractAsyncRoute implements AsyncRoute {
       req.response().putHeader("content-type", contentType)
           .end(this.proceed(req.request(), req.response()));
 
-      new Thread(new Runnable() {
-        @Override
-        public void run() {
-          LOGGER.info("Lauching route " + url + " async action...");
-          proceedAsync(req.request(), req.response());
-        }
+      new Thread(() -> {
+        LOGGER.info("Lauching route " + url + " async action...");
+        proceedAsync(req.request(), req.response());
       }).start();
     });
   }
