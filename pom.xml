@@ -34,7 +34,6 @@
 		<!-- Maven plugins -->
 		<jacoco.version>0.7.4.201502262128</jacoco.version>
 		<checkstyle.version>2.13</checkstyle.version>
-		<findbugs.version>3.0.1</findbugs.version>
 		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
 		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 		<maven-shade-plugin.version>2.3</maven-shade-plugin.version>
@@ -55,7 +54,6 @@
 		<elasticsearch.version>1.7.2</elasticsearch.version>
 
 		<!-- Enble/disable plugins -->
-		<findbugs.skip>false</findbugs.skip>
 		<checkstyle.skip>false</checkstyle.skip>
 		<jacoco.skip>false</jacoco.skip>
 	</properties>
@@ -278,31 +276,6 @@
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>checkstyle</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>${findbugs.version}</version>
-				<configuration>
-					<effort>Max</effort>
-					<threshold>Low</threshold>
-					<includeFilterFile>${basedir}/FindBugs.xml</includeFilterFile>
-					<xmlOutput>true</xmlOutput>
-					<failOnError>false</failOnError>
-					<fork>true</fork>
-					<meminitial>512m</meminitial>
-					<maxmem>1048m</maxmem>
-					<failOnError>false</failOnError>
-					<skip>${findbugs.skip}</skip>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>findbugs</goal>
 						</goals>
 					</execution>
 				</executions>
