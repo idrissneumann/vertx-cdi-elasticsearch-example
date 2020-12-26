@@ -21,6 +21,8 @@
 		<commons-collections.version>3.2.2</commons-collections.version>
 		<commons-io.version>2.4</commons-io.version>
 		<log4j2.version>2.13.2</log4j2.version>
+		<jaxb.version>2.3.0</jaxb.version>
+		<javax.annotation.version>1.3.2</javax.annotation.version>
 
 		<!-- database -->
 		<postgresql.version>9.4-1201-jdbc41</postgresql.version>
@@ -52,6 +54,27 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>${javax.annotation.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>

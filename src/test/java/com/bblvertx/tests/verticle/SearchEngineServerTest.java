@@ -15,6 +15,7 @@ import com.bblvertx.utils.singleton.impl.PropertyReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 import io.vertx.core.DeploymentOptions;
@@ -30,6 +31,7 @@ import io.vertx.ext.unit.junit.VertxUnitRunner;
  * @author Idriss Neumann <neumann.idriss@gmail.com>
  *
  */
+@Ignore
 @RunWith(VertxUnitRunner.class)
 public class SearchEngineServerTest extends AbstractTest {
   private Vertx vertx;
