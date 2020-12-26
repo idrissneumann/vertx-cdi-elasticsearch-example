@@ -32,9 +32,6 @@
 		<mockito.version>1.9.5</mockito.version>
 
 		<!-- Maven plugins -->
-		<jacoco.version>0.7.4.201502262128</jacoco.version>
-		<checkstyle.version>2.13</checkstyle.version>
-		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
 		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 		<maven-shade-plugin.version>2.3</maven-shade-plugin.version>
 
@@ -52,10 +49,6 @@
 
 		<!-- Elastic Search -->
 		<elasticsearch.version>1.7.2</elasticsearch.version>
-
-		<!-- Enble/disable plugins -->
-		<checkstyle.skip>false</checkstyle.skip>
-		<jacoco.skip>false</jacoco.skip>
 	</properties>
 
 	<dependencies>
@@ -191,96 +184,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
-				<configuration>
-					<additionalClasspathElements>
-						<additionalClasspathElement>src/test/resources</additionalClasspathElement>
-					</additionalClasspathElements>
-					<excludes>
-						<exclude>**/*Test.java</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<phase>integration-test</phase>
-						<configuration>
-							<argLine>${surefireArgLine}</argLine>
-							<excludes>
-								<exclude>none</exclude>
-							</excludes>
-							<includes>
-								<include>**/*Test.java</include>
-							</includes>
-							<additionalClasspathElements>
-								<additionalClasspathElement>src/test/resources/spring</additionalClasspathElement>
-							</additionalClasspathElements>
-						</configuration>
-					</execution>
-					<execution>
-						<id>post-integration-test</id>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<phase>post-integration-test</phase>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
-				<executions>
-					<!-- prepare agent for measuring integration tests -->
-					<execution>
-						<id>prepare-integration-tests</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						<configuration>
-							<propertyName>surefireArgLine</propertyName>
-							<destFile>${basedir}/target/jacoco.exec</destFile>
-							<skip>${jacoco.skip}</skip>
-						</configuration>
-					</execution>
-					<execution>
-						<id>jacoco-site</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<dataFile>${basedir}/target/jacoco.exec</dataFile>
-							<skip>${jacoco.skip}</skip>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${checkstyle.version}</version>
-				<configuration>
-					<configLocation>${basedir}/checkStyle.xml</configLocation>
-					<skip>${checkstyle.skip}</skip>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>checkstyle</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
